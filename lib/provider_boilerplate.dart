@@ -6,22 +6,24 @@ import 'bloc/base_bloc.dart';
 import 'package:flutter/foundation.dart';
 
 export 'bloc/base_bloc.dart';
+export 'components/button.dart';
+export 'package:provider/provider.dart';
 
 Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
   return Center();
 }
 
 class ProviderBoilerplate extends StatelessWidget {
-  final List blocs;
+  final List<SingleChildCloneableWidget> providers;
   final Widget child;
-  ProviderBoilerplate({this.blocs = const [], this.child, Key key})
+  ProviderBoilerplate({this.providers = const [], this.child, Key key})
       : super(key: key);
 
   @required
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: this.blocs.map((bloc) => registerProvider(bloc)).toList(),
+      providers: providers,
       child: this.child,
     );
   }
