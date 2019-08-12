@@ -1,6 +1,6 @@
 # provider_boilerplate
 
-A boilerplate for flutter to organize provider and bloc.
+A boilerplate for flutter to organize provider, bloc and common components.
 
 ## Getting Started
 
@@ -12,3 +12,11 @@ Android and/or iOS.
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.dev/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
+
+
+## Installation
+```yaml
+  provider_boilerplate:
+    git:
+      url: git://github.com/shiburagi/ProviderBoilerplate-Flutter.git
+```
