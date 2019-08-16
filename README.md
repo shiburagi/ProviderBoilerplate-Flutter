@@ -79,3 +79,60 @@ class _MyAppState extends State<MyApp> {
   }
 }
 ```
+
+
+## Components
+
+### Button
+```dart
+FillButton(
+  fullWidth: true,
+  onPressed: () {},
+  child: Text("Default"),
+),
+```
+
+```dart
+FillButton(
+  fullWidth: true,
+  onPressed: () {},
+  type: ButtonType.primary,
+  child: Text("Primary"),
+),
+```
+
+```dart
+FillButton(
+  fullWidth: true,
+  onPressed: () {},
+  type: ButtonType.accent,
+  child: Text("Accent"),
+),
+```
+
+```dart
+FillButton(
+  fullWidth: true,
+  onPressed: () {},
+  type: ButtonType.success,
+  child: Text("Success"),
+),
+```
+
+```dart
+FillButton(
+  fullWidth: true,
+  onPressed: () {},
+  type: ButtonType.warning,
+  child: Text("Warning"),
+),
+```
+
+```dart
+FillButton(
+  fullWidth: true,
+  onPressed: () {},
+  type: ButtonType.danger,
+  child: Text("Danger"),
+),
+```
