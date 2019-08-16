@@ -84,6 +84,8 @@ class _MyAppState extends State<MyApp> {
 ## Components
 
 ### Button
+
+#### Default
 ```dart
 FillButton(
   fullWidth: true,
@@ -92,6 +94,7 @@ FillButton(
 ),
 ```
 
+#### Primary
 ```dart
 FillButton(
   fullWidth: true,
@@ -100,7 +103,7 @@ FillButton(
   child: Text("Primary"),
 ),
 ```
-
+#### Accent
 ```dart
 FillButton(
   fullWidth: true,
@@ -110,6 +113,7 @@ FillButton(
 ),
 ```
 
+#### Success
 ```dart
 FillButton(
   fullWidth: true,
@@ -119,6 +123,7 @@ FillButton(
 ),
 ```
 
+#### Warning
 ```dart
 FillButton(
   fullWidth: true,
@@ -128,6 +133,7 @@ FillButton(
 ),
 ```
 
+#### Danger
 ```dart
 FillButton(
   fullWidth: true,
