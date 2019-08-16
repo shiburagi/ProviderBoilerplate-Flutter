@@ -92,7 +92,6 @@ class DecorTextField extends TextFormField {
       case TextFieldBorderType.filled:
         return decoration.copyWith(
           contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
-          fillColor: decoration.fillColor ?? Colors.black.withOpacity(0.1),
           filled: true,
         );
       case TextFieldBorderType.blurred:
@@ -100,7 +99,6 @@ class DecorTextField extends TextFormField {
             borderSide: BorderSide(color: Colors.transparent));
 
         return decoration.copyWith(
-          fillColor: decoration.fillColor ?? Colors.black.withOpacity(0.1),
           filled: true,
           border: border,
           enabledBorder: border,
