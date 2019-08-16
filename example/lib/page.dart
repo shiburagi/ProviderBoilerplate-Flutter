@@ -3,11 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:provider_boilerplate/provider_boilerplate.dart';
 import 'package:provider_boilerplate_example/bloc.dart';
 
+List<BottomNavigationBarItem> barItems() {
+  return [
+    BottomNavigationBarItem(title: Text("BUTTON"), icon: Icon(Icons.title)),
+    BottomNavigationBarItem(title: Text("TEXTFIELD"), icon: Icon(Icons.title)),
+  ];
+}
+
 class Page extends StatelessWidget {
   final String title;
   Page({this.title});
   @override
   Widget build(BuildContext context) {
+    PageBloc pageBloc = Provider.of(context);
     ThemeBloc themeBloc = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -22,51 +30,25 @@ class Page extends StatelessWidget {
             );
           }),
       body: SingleChildScrollView(
-          child: Container(
-        padding: EdgeInsets.fromLTRB(32, 0, 32, 0),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 24,
-            ),
-            FillButton(
-              fullWidth: true,
-              onPressed: () {},
-              child: Text("Default"),
-            ),
-            FillButton(
-              fullWidth: true,
-              onPressed: () {},
-              type: ButtonType.primary,
-              child: Text("Primary"),
-            ),
-            FillButton(
-              fullWidth: true,
-              onPressed: () {},
-              type: ButtonType.accent,
-              child: Text("Accent"),
-            ),
-            FillButton(
-              fullWidth: true,
-              onPressed: () {},
-              type: ButtonType.success,
-              child: Text("Success"),
-            ),
-            FillButton(
-              fullWidth: true,
-              onPressed: () {},
-              type: ButtonType.warning,
-              child: Text("Warning"),
-            ),
-            FillButton(
-              fullWidth: true,
-              onPressed: () {},
-              type: ButtonType.danger,
-              child: Text("Danger"),
-            ),
-          ],
-        ),
-      )),
+          child: StreamBuilder<int>(
+              stream: pageBloc.stream,
+              builder: (context, snapshot) {
+                return pageBloc.getPage(snapshot.data ?? 0);
+              })),
+      bottomNavigationBar: StreamBuilder<int>(
+          stream: pageBloc.stream,
+          builder: (context, snapshot) {
+            return BottomAppBar(
+              child: BottomNavigationBar(
+                currentIndex: snapshot.data ?? 0,
+                backgroundColor: Colors.transparent,
+                iconSize: 0,
+                elevation: 0,
+                items: barItems(),
+                onTap: pageBloc.setPage,
+              ),
+            );
+          }),
     );
   }
 }

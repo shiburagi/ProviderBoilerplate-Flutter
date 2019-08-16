@@ -34,6 +34,7 @@ class _MyAppState extends State<MyApp> {
     return ProviderBoilerplate(
       providers: [
         registerProvider(themeBloc),
+        registerProvider(PageBloc()),
       ],
       child: StreamBuilder<Brightness>(
           stream: themeBloc.stream,
