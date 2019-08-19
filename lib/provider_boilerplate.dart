@@ -40,12 +40,12 @@ class SplashPage<T> extends StatelessWidget {
   final WidgetBuilder splash;
   final WidgetBuilder auth;
   final WidgetBuilder landing;
-  final Function(BuildContext) onStart;
-  final bool Function(dynamic) isValid;
+  final Future Function(BuildContext) onStart;
+  final bool Function(dynamic) hasAccess;
 
   SplashPage({
     @required this.onStart,
-    @required this.isValid,
+    @required this.hasAccess,
     @required this.auth,
     @required this.landing,
     this.splash,
@@ -57,7 +57,7 @@ class SplashPage<T> extends StatelessWidget {
         future: this.onStart(context),
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
           if (snapshot.data != null) {
-            return isValid(snapshot.data) ? auth(context) : landing(context);
+            return hasAccess(snapshot.data) ? landing(context) : auth(context);
           }
 
           return this.splash != null

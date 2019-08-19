@@ -46,8 +46,8 @@ class _MyAppState extends State<MyApp> {
               home: SplashPage(
                 auth: (c) => Page(title: "Login Page"),
                 landing: (c) => Page(title: "User Page"),
-                isValid: (d) => d,
-                onStart: (c) => onStart(context),
+                hasAccess: (d) => d,
+                onStart: onStart,
               ),
             );
           }),

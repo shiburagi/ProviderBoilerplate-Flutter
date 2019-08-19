@@ -128,9 +128,16 @@ class FillButton extends RaisedButton {
   }
 
   ShapeBorder createShape(BuildContext context) {
-    return RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10000)),
-    );
+    switch (this.variant) {
+      case ButtonVariant.rectFill:
+        return RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(0)),
+        );
+      default:
+        return RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10000)),
+        );
+    }
   }
 }
 
@@ -145,6 +152,7 @@ enum ButtonType {
 enum ButtonVariant {
   normal,
   circular,
+  rectFill,
 }
 
 Color buttonColors(BuildContext context, ButtonType type) {
