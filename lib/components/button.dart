@@ -10,7 +10,7 @@ class FillButton extends RaisedButton {
   const FillButton({
     this.fullWidth = false,
     this.type,
-    this.buttonShape = ButtonShape.normal,
+    this.variant = ButtonVariant.normal,
     Key key,
     @required VoidCallback onPressed,
     ValueChanged<bool> onHighlightChanged,
@@ -69,7 +69,7 @@ class FillButton extends RaisedButton {
           child: child,
         );
   final ButtonType type;
-  final ButtonShape buttonShape;
+  final ButtonVariant variant;
   final bool fullWidth;
 
   @override
@@ -100,7 +100,7 @@ class FillButton extends RaisedButton {
       disabledElevation: buttonTheme.getDisabledElevation(this),
       padding: buttonTheme.getPadding(this),
       constraints: buttonTheme.getConstraints(this),
-      shape: buttonShape == ButtonShape.normal
+      shape: variant == ButtonVariant.normal
           ? buttonTheme.getShape(this)
           : createShape(context),
       focusNode: focusNode,
@@ -142,7 +142,7 @@ enum ButtonType {
   warning,
   success,
 }
-enum ButtonShape {
+enum ButtonVariant {
   normal,
   circular,
 }

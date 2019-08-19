@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class DecorTextField extends TextFormField {
   DecorTextField({
-    this.borderType = TextFieldBorderType.normal,
+    this.variant = TextFieldVariant.normal,
     Key key,
     TextEditingController controller,
     String initialValue,
@@ -43,8 +43,9 @@ class DecorTextField extends TextFormField {
     InputCounterWidgetBuilder buildCounter,
   }) : super(
           key: key,
+          controller:controller,
           focusNode: focusNode,
-          decoration: getDecoration(borderType, decoration),
+          decoration: getDecoration(variant, decoration),
           keyboardType: keyboardType,
           textInputAction: textInputAction,
           style: style,
@@ -76,25 +77,25 @@ class DecorTextField extends TextFormField {
           buildCounter: buildCounter,
         );
   final InputDecoration decoration;
-  final TextFieldBorderType borderType;
+  final TextFieldVariant variant;
   @override
   createState() {
     return super.createState();
   }
 
   static getDecoration(
-      TextFieldBorderType borderType, InputDecoration decoration) {
+      TextFieldVariant borderType, InputDecoration decoration) {
     InputBorder border;
     switch (borderType) {
-      case TextFieldBorderType.outline:
+      case TextFieldVariant.outline:
         border = OutlineInputBorder();
         break;
-      case TextFieldBorderType.filled:
+      case TextFieldVariant.filled:
         return decoration.copyWith(
           contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
           filled: true,
         );
-      case TextFieldBorderType.blurred:
+      case TextFieldVariant.blurred:
         border = OutlineInputBorder(
             borderSide: BorderSide(color: Colors.transparent));
 
@@ -114,7 +115,7 @@ class DecorTextField extends TextFormField {
   }
 }
 
-enum TextFieldBorderType {
+enum TextFieldVariant {
   normal,
   outline,
   filled,

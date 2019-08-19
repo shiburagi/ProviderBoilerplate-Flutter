@@ -14,34 +14,34 @@ class TextFieldPage extends StatelessWidget {
           ),
           DecorTextField(
             decoration: InputDecoration(
-              hintText: "Default",
+              labelText: "Default",
             ),
           ),
           Container(
             height: 24,
           ),
           DecorTextField(
-            borderType: TextFieldBorderType.outline,
+            variant: TextFieldVariant.outline,
             decoration: InputDecoration(
-              hintText: "Outlined",
+              labelText: "Outlined",
             ),
           ),
           Container(
             height: 24,
           ),
           DecorTextField(
-            borderType: TextFieldBorderType.filled,
+            variant: TextFieldVariant.filled,
             decoration: InputDecoration(
-              hintText: "Filled",
+              labelText: "Filled",
             ),
           ),
           Container(
             height: 24,
           ),
           DecorTextField(
-            borderType: TextFieldBorderType.blurred,
+            variant: TextFieldVariant.blurred,
             decoration: InputDecoration(
-              hintText: "Blurred",
+              labelText: "Blurred",
             ),
           ),
         ],
