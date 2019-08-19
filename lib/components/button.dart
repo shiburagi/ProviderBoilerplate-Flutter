@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class FillButton extends RaisedButton {
+
   /// Create a filled button.
   ///
   /// The [elevation], [highlightElevation], [disabledElevation], and
@@ -9,8 +10,9 @@ class FillButton extends RaisedButton {
   /// [highlightElevation], and [disabledElevation] must be non-negative.
   const FillButton({
     this.fullWidth = false,
+    this.borderSide,
     this.type,
-    this.variant = ButtonVariant.normal,
+    this.variant = ButtonVariant.raised,
     Key key,
     @required VoidCallback onPressed,
     ValueChanged<bool> onHighlightChanged,
@@ -71,9 +73,53 @@ class FillButton extends RaisedButton {
   final ButtonType type;
   final ButtonVariant variant;
   final bool fullWidth;
+  final BorderSide borderSide;
 
   @override
   Widget build(BuildContext context) {
+    switch (variant) {
+      case ButtonVariant.outlined:
+        return buildOutlineButton(context);
+      case ButtonVariant.flat:
+        return buildFlatButton(context);
+      default:
+        return buildRawMaterialButton(context);
+    }
+  }
+
+  Widget buildFlatButton(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
+        minWidth: this.fullWidth ? double.maxFinite : null,
+        buttonColor: Colors.transparent);
+    return RawMaterialButton(
+      onPressed: onPressed,
+      onHighlightChanged: onHighlightChanged,
+      fillColor: getFillColor(this, buttonTheme),
+      textStyle:
+          theme.textTheme.button.copyWith(color: buttonColors(context, type)),
+      focusColor: buttonTheme.getFocusColor(this),
+      hoverColor: buttonTheme.getHoverColor(this),
+      highlightColor: buttonTheme.getHighlightColor(this),
+      splashColor: buttonTheme.getSplashColor(this),
+      elevation: buttonTheme.getElevation(this),
+      focusElevation: buttonTheme.getFocusElevation(this),
+      hoverElevation: buttonTheme.getHoverElevation(this),
+      highlightElevation: buttonTheme.getHighlightElevation(this),
+      disabledElevation: buttonTheme.getDisabledElevation(this),
+      padding: buttonTheme.getPadding(this),
+      constraints: buttonTheme.getConstraints(this),
+      shape: buttonTheme.getShape(this),
+      clipBehavior: clipBehavior ?? Clip.none,
+      focusNode: focusNode,
+      materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
+      animationDuration: buttonTheme.getAnimationDuration(this),
+      child: child,
+    );
+  }
+
+  RawMaterialButton buildRawMaterialButton(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
       buttonColor: buttonColors(context, type),
@@ -86,7 +132,7 @@ class FillButton extends RaisedButton {
       onPressed: onPressed,
       onHighlightChanged: onHighlightChanged,
       clipBehavior: clipBehavior ?? Clip.none,
-      fillColor: buttonTheme.getFillColor(this),
+      fillColor: getFillColor(this, buttonTheme),
       textStyle: theme.textTheme.button
           .copyWith(color: buttonTheme.getTextColor(this)),
       focusColor: buttonTheme.getFocusColor(this),
@@ -100,13 +146,40 @@ class FillButton extends RaisedButton {
       disabledElevation: buttonTheme.getDisabledElevation(this),
       padding: buttonTheme.getPadding(this),
       constraints: buttonTheme.getConstraints(this),
-      shape: variant == ButtonVariant.normal
+      shape: variant == ButtonVariant.raised
           ? buttonTheme.getShape(this)
           : createShape(context),
       focusNode: focusNode,
       animationDuration: buttonTheme.getAnimationDuration(this),
       materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
       child: child,
+    );
+  }
+
+  Widget buildOutlineButton(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
+      minWidth: this.fullWidth ? double.maxFinite : null,
+    );
+
+    Color color = buttonColors(context, type);
+    return ButtonTheme.fromButtonThemeData(
+      data: buttonTheme,
+      child: OutlineButton(
+        onPressed: onPressed,
+        borderSide: color == null ? borderSide : BorderSide(color: color),
+        textColor: buttonColors(context, type),
+        clipBehavior: clipBehavior ?? Clip.none,
+        focusColor: buttonTheme.getFocusColor(this),
+        hoverColor: buttonTheme.getHoverColor(this),
+        highlightColor: buttonTheme.getHighlightColor(this),
+        splashColor: buttonTheme.getSplashColor(this),
+        highlightElevation: buttonTheme.getHighlightElevation(this),
+        padding: buttonTheme.getPadding(this),
+        shape: variant == ButtonVariant.outlined ? shape : createShape(context),
+        focusNode: focusNode,
+        child: child,
+      ),
     );
   }
 
@@ -127,9 +200,24 @@ class FillButton extends RaisedButton {
         defaultValue: null));
   }
 
+  Color getFillColor(MaterialButton button, ButtonThemeData buttonTheme) {
+    final Color fillColor =
+        button.enabled ? button.color : button.disabledColor;
+    if (fillColor != null)
+      return fillColor;
+    else if (variant == ButtonVariant.flat)
+      return null;
+    else
+      return buttonTheme.getFillColor(button);
+  }
+
   ShapeBorder createShape(BuildContext context) {
     switch (this.variant) {
       case ButtonVariant.rectFill:
+        return RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(0)),
+        );
+      case ButtonVariant.outlined:
         return RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(0)),
         );
@@ -150,9 +238,11 @@ enum ButtonType {
   success,
 }
 enum ButtonVariant {
-  normal,
+  flat,
+  raised,
   circular,
   rectFill,
+  outlined,
 }
 
 Color buttonColors(BuildContext context, ButtonType type) {

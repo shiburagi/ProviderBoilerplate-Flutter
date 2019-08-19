@@ -4,6 +4,16 @@ import 'package:provider_boilerplate/components/button.dart';
 class ButtonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        buildButtonList(ButtonVariant.raised),
+        buildButtonList(ButtonVariant.flat),
+        buildButtonList(ButtonVariant.outlined),
+      ],
+    );
+  }
+
+  Container buildButtonList(ButtonVariant variant) {
     return Container(
       padding: EdgeInsets.fromLTRB(32, 0, 32, 0),
       child: Column(
@@ -13,39 +23,46 @@ class ButtonPage extends StatelessWidget {
           ),
           FillButton(
             fullWidth: true,
+            variant: variant,
             onPressed: () {},
             child: Text("Default"),
           ),
           FillButton(
             fullWidth: true,
+            variant: variant,
             onPressed: () {},
             type: ButtonType.primary,
             child: Text("Primary"),
           ),
           FillButton(
             fullWidth: true,
+            variant: variant,
             onPressed: () {},
             type: ButtonType.accent,
             child: Text("Accent"),
           ),
           FillButton(
             fullWidth: true,
+            variant: variant,
             onPressed: () {},
             type: ButtonType.success,
             child: Text("Success"),
           ),
           FillButton(
             fullWidth: true,
+            variant: variant,
             onPressed: () {},
             type: ButtonType.warning,
             child: Text("Warning"),
           ),
           FillButton(
             fullWidth: true,
+            variant: variant,
             onPressed: () {},
             type: ButtonType.danger,
             child: Text("Danger"),
           ),
+          Container(height: 24,)
         ],
       ),
     );
