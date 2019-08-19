@@ -9,19 +9,26 @@ export 'bloc/base_bloc.dart';
 export 'components/button.dart';
 export 'package:provider/provider.dart';
 
-Widget getErrorWidget(BuildContext context, FlutterErrorDetails error) {
-  return Center();
-}
-
 class ProviderBoilerplate extends StatelessWidget {
   final List<SingleChildCloneableWidget> providers;
   final Widget child;
-  ProviderBoilerplate({this.providers = const [], this.child, Key key})
-      : super(key: key);
+
+  final Function(BuildContext, FlutterErrorDetails) errorWidget;
+  ProviderBoilerplate({
+    this.providers = const [],
+    this.errorWidget,
+    this.child,
+    Key key,
+  }) : super(key: key);
 
   @required
   @override
   Widget build(BuildContext context) {
+    if (kReleaseMode && errorWidget != null) {
+      ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+        return errorWidget(context, errorDetails);
+      };
+    }
     return MultiProvider(
       providers: providers,
       child: this.child,
