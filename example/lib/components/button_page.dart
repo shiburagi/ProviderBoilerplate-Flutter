@@ -74,7 +74,6 @@ class ButtonPage extends StatelessWidget {
           Container(
             height: 24,
           )
-          
         ],
       ),
     );

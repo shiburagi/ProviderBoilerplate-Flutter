@@ -32,19 +32,25 @@ class DecorDropDown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: cardEffect ? elevation : 0,
-      child: DropdownButtonFormField(
-        key: key,
-        onSaved: onSaved,
-        value: value,
-        validator: validator,
-        items:
-            itemBuilder == null ? items : List.generate(itemCount, itemBuilder),
-        decoration: getDecoration(variant, decoration),
-        hint: hint,
-        onChanged: onChanged,
-      ),
+    return cardEffect
+        ? Card(
+            elevation: elevation,
+            child: buildTheme(),
+          )
+        : buildTheme();
+  }
+
+  DropdownButtonFormField buildTheme() {
+    return DropdownButtonFormField(
+      key: key,
+      onSaved: onSaved,
+      value: value,
+      validator: validator,
+      items:
+          itemBuilder == null ? items : List.generate(itemCount, itemBuilder),
+      decoration: getDecoration(variant, decoration),
+      hint: hint,
+      onChanged: onChanged,
     );
   }
 }

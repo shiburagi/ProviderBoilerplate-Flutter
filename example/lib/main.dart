@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ProviderBoilerplate(
+      errorWidget: (context, errorDetails)=>Container(),
       providers: [
         registerProvider(themeBloc),
         registerProvider(PageBloc()),

@@ -31,7 +31,6 @@ class DecorTextField extends StatelessWidget {
     this.buildCounter,
     this.cardEffect = false,
     this.elevation = 1.0,
-    
   }) : super(
           key: key,
         );
@@ -76,53 +75,59 @@ class DecorTextField extends StatelessWidget {
 
   final bool cardEffect;
   final double elevation;
-  
+
   @override
   Widget build(BuildContext context) {
     ThemeData data = Theme.of(context);
-    return Card(
-      elevation: cardEffect ? elevation : 0,
-      child: Theme(
-        data: data.copyWith(
-          primaryColor: formFieldColor == FormFieldColor.primary
-              ? data.primaryColor
-              : data.accentColor,
-        ),
-        child: TextFormField(
-          key: key,
-          controller: controller,
-          focusNode: focusNode,
-          decoration: getDecoration(variant, decoration),
-          keyboardType: keyboardType,
-          textInputAction: textInputAction,
-          style: style,
-          strutStyle: strutStyle,
-          textAlign: textAlign,
-          textDirection: textDirection,
-          textCapitalization: textCapitalization,
-          autofocus: autofocus,
-          readOnly: readOnly,
-          showCursor: showCursor,
-          obscureText: obscureText,
-          autocorrect: autocorrect,
-          maxLengthEnforced: maxLengthEnforced,
-          maxLines: maxLines,
-          minLines: minLines,
-          expands: expands,
-          maxLength: maxLength,
-          onChanged: onChanged,
-          onEditingComplete: onEditingComplete,
-          onFieldSubmitted: onFieldSubmitted,
-          inputFormatters: inputFormatters,
-          enabled: enabled,
-          cursorWidth: cursorWidth,
-          cursorRadius: cursorRadius,
-          cursorColor: cursorColor,
-          scrollPadding: scrollPadding,
-          keyboardAppearance: keyboardAppearance,
-          enableInteractiveSelection: enableInteractiveSelection,
-          buildCounter: buildCounter,
-        ),
+    return cardEffect
+        ? Card(
+            elevation: elevation,
+            child: buildTheme(data),
+          )
+        : buildTheme(data);
+  }
+
+  Theme buildTheme(ThemeData data) {
+    return Theme(
+      data: data.copyWith(
+        primaryColor: formFieldColor == FormFieldColor.primary
+            ? data.primaryColor
+            : data.accentColor,
+      ),
+      child: TextFormField(
+        key: key,
+        controller: controller,
+        focusNode: focusNode,
+        decoration: getDecoration(variant, decoration),
+        keyboardType: keyboardType,
+        textInputAction: textInputAction,
+        style: style,
+        strutStyle: strutStyle,
+        textAlign: textAlign,
+        textDirection: textDirection,
+        textCapitalization: textCapitalization,
+        autofocus: autofocus,
+        readOnly: readOnly,
+        showCursor: showCursor,
+        obscureText: obscureText,
+        autocorrect: autocorrect,
+        maxLengthEnforced: maxLengthEnforced,
+        maxLines: maxLines,
+        minLines: minLines,
+        expands: expands,
+        maxLength: maxLength,
+        onChanged: onChanged,
+        onEditingComplete: onEditingComplete,
+        onFieldSubmitted: onFieldSubmitted,
+        inputFormatters: inputFormatters,
+        enabled: enabled,
+        cursorWidth: cursorWidth,
+        cursorRadius: cursorRadius,
+        cursorColor: cursorColor,
+        scrollPadding: scrollPadding,
+        keyboardAppearance: keyboardAppearance,
+        enableInteractiveSelection: enableInteractiveSelection,
+        buildCounter: buildCounter,
       ),
     );
   }
