@@ -1,4 +1,4 @@
-# provider_boilerplate
+# Provider Boilerplate
 
 A boilerplate for flutter to organize provider, bloc and common components.
 
@@ -57,8 +57,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ProviderBoilerplate(
+      errorWidget: (context, errorDetails)=>Container(),
       providers: [
         registerProvider(themeBloc),
+        registerProvider(PageBloc()),
       ],
       child: StreamBuilder<Brightness>(
           stream: themeBloc.stream,
@@ -70,8 +72,8 @@ class _MyAppState extends State<MyApp> {
               home: SplashPage(
                 auth: (c) => Page(title: "Login Page"),
                 landing: (c) => Page(title: "User Page"),
-                isValid: (d) => d,
-                onStart: (c) => onStart(context),
+                hasAccess: (d) => d,
+                onStart: onStart,
               ),
             );
           }),
@@ -85,10 +87,12 @@ class _MyAppState extends State<MyApp> {
 
 ### Button
 
+
 #### Default
 ```dart
-FillButton(
+DecorButton(
   fullWidth: true,
+  variant: variant,
   onPressed: () {},
   child: Text("Default"),
 ),
@@ -96,17 +100,20 @@ FillButton(
 
 #### Primary
 ```dart
-FillButton(
+DecorButton(
   fullWidth: true,
+  variant: variant,
   onPressed: () {},
   type: ButtonType.primary,
   child: Text("Primary"),
 ),
 ```
+
 #### Accent
 ```dart
-FillButton(
+DecorButton(
   fullWidth: true,
+  variant: variant,
   onPressed: () {},
   type: ButtonType.accent,
   child: Text("Accent"),
@@ -115,8 +122,9 @@ FillButton(
 
 #### Success
 ```dart
-FillButton(
+DecorButton(
   fullWidth: true,
+  variant: variant,
   onPressed: () {},
   type: ButtonType.success,
   child: Text("Success"),
@@ -125,8 +133,9 @@ FillButton(
 
 #### Warning
 ```dart
-FillButton(
+DecorButton(
   fullWidth: true,
+  variant: variant,
   onPressed: () {},
   type: ButtonType.warning,
   child: Text("Warning"),
@@ -135,10 +144,24 @@ FillButton(
 
 #### Danger
 ```dart
-FillButton(
+DecorButton(
   fullWidth: true,
+  variant: variant,
   onPressed: () {},
   type: ButtonType.danger,
   child: Text("Danger"),
+),
+```
+
+## TextField
+```dart
+DecorTextField(
+  formFieldColor: fieldColor,
+  cardEffect: true,
+  elevation: 4.0,
+  variant: FormFieldVariant.transparent,
+  decoration: InputDecoration(
+    labelText: "Card",
+  ),
 ),
 ```
