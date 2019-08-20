@@ -57,8 +57,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ProviderBoilerplate(
+      errorWidget: (context, errorDetails)=>Container(),
       providers: [
         registerProvider(themeBloc),
+        registerProvider(PageBloc()),
       ],
       child: StreamBuilder<Brightness>(
           stream: themeBloc.stream,
@@ -70,8 +72,8 @@ class _MyAppState extends State<MyApp> {
               home: SplashPage(
                 auth: (c) => Page(title: "Login Page"),
                 landing: (c) => Page(title: "User Page"),
-                isValid: (d) => d,
-                onStart: (c) => onStart(context),
+                hasAccess: (d) => d,
+                onStart: onStart,
               ),
             );
           }),
