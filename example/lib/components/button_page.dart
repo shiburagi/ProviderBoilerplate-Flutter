@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider_boilerplate/components/button.dart';
 
@@ -6,63 +7,74 @@ class ButtonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        buildButtonList(ButtonVariant.raised),
-        buildButtonList(ButtonVariant.flat),
-        buildButtonList(ButtonVariant.outlined),
+        buildButtonList(context, "Flat", ButtonVariant.flat),
+        buildButtonList(context, "Raised", ButtonVariant.raised),
+        buildButtonList(context, "Outlined", ButtonVariant.outlined),
       ],
     );
   }
 
-  Container buildButtonList(ButtonVariant variant) {
+  Container buildButtonList(
+      BuildContext context, String title, ButtonVariant variant) {
     return Container(
       padding: EdgeInsets.fromLTRB(32, 0, 32, 0),
       child: Column(
         children: <Widget>[
-          Container(
+          Divider(
             height: 24,
           ),
-          FillButton(
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline,
+          ),
+          Divider(
+            height: 24,
+          ),
+          DecorButton(
             fullWidth: true,
             variant: variant,
             onPressed: () {},
             child: Text("Default"),
           ),
-          FillButton(
+          DecorButton(
             fullWidth: true,
             variant: variant,
             onPressed: () {},
             type: ButtonType.primary,
             child: Text("Primary"),
           ),
-          FillButton(
+          DecorButton(
             fullWidth: true,
             variant: variant,
             onPressed: () {},
             type: ButtonType.accent,
             child: Text("Accent"),
           ),
-          FillButton(
+          DecorButton(
             fullWidth: true,
             variant: variant,
             onPressed: () {},
             type: ButtonType.success,
             child: Text("Success"),
           ),
-          FillButton(
+          DecorButton(
             fullWidth: true,
             variant: variant,
             onPressed: () {},
             type: ButtonType.warning,
             child: Text("Warning"),
           ),
-          FillButton(
+          DecorButton(
             fullWidth: true,
             variant: variant,
             onPressed: () {},
             type: ButtonType.danger,
             child: Text("Danger"),
           ),
-          Container(height: 24,)
+          Container(
+            height: 24,
+          )
+          
         ],
       ),
     );

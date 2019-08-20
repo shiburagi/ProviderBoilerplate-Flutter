@@ -2,13 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider_boilerplate/provider_boilerplate.dart';
 
-class TextFieldPage extends StatelessWidget {
+class DropdownPage extends StatelessWidget {
+  final List<DropdownMenuItem<String>> _items = [
+    DropdownMenuItem(
+      child: Text("example 1"),
+      value: "example 1",
+    ),
+    DropdownMenuItem(
+      child: Text("example 2"),
+      value: "example 2",
+    ),
+    DropdownMenuItem(
+      child: Text("example 3"),
+      value: "example 3",
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         buildTextfieldList(context, "Primary", FormFieldColor.primary),
-        buildTextfieldList(context, "Accent", FormFieldColor.accent),
       ],
     );
   }
@@ -29,73 +42,51 @@ class TextFieldPage extends StatelessWidget {
           Divider(
             height: 24,
           ),
-          DecorTextField(
-            formFieldColor: fieldColor,
-            decoration: InputDecoration(
-              labelText: "Default",
-            ),
+          DecorDropDown<String>(
+            value: "example 1",
+            items: _items,
           ),
           Container(
             height: 24,
           ),
-          DecorTextField(
-            formFieldColor: fieldColor,
+          DecorDropDown<String>(
             variant: FormFieldVariant.outlined,
-            decoration: InputDecoration(
-              labelText: "Outlined",
-            ),
+            value: "example 1",
+            items: _items,
           ),
           Container(
             height: 24,
           ),
-          DecorTextField(
-            formFieldColor: fieldColor,
+          DecorDropDown<String>(
             variant: FormFieldVariant.rectOutlined,
-            decoration: InputDecoration(
-              labelText: "Rectangle Outlined",
-            ),
+            value: "example 1",
+            items: _items,
           ),
           Container(
             height: 24,
           ),
-          DecorTextField(
-            formFieldColor: fieldColor,
+          DecorDropDown<String>(
             variant: FormFieldVariant.filled,
-            decoration: InputDecoration(
-              labelText: "Filled",
-            ),
+            value: "example 1",
+            items: _items,
           ),
           Container(
             height: 24,
           ),
-          DecorTextField(
-            formFieldColor: fieldColor,
+          DecorDropDown<String>(
             variant: FormFieldVariant.blurred,
-            decoration: InputDecoration(
-              labelText: "Blurred",
-            ),
+            value: "example 1",
+            items: _items,
           ),
           Container(
             height: 24,
           ),
-          DecorTextField(
-            formFieldColor: fieldColor,
-            variant: FormFieldVariant.blurred,
-            decoration: InputDecoration(
-              labelText: "Blurred",
-            ),
-          ),
-          Container(
-            height: 24,
-          ),
-          DecorTextField(
-            formFieldColor: fieldColor,
+          DecorDropDown<String>(
             cardEffect: true,
-            elevation: 4.0,
+            elevation: 4,
             variant: FormFieldVariant.transparent,
-            decoration: InputDecoration(
-              labelText: "Card",
-            ),
+            value: "example 1",
+            items: _items,
           ),
           Container(
             height: 24,

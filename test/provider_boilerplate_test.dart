@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider_boilerplate/provider_boilerplate.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('provider_boilerplate');
@@ -16,6 +15,5 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await ProviderBoilerplate.platformVersion, '42');
   });
 }

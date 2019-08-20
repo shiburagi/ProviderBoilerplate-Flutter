@@ -7,6 +7,9 @@ import 'package:flutter/foundation.dart';
 
 export 'bloc/base_bloc.dart';
 export 'components/button.dart';
+export 'components/dropdown.dart';
+export 'components/textfield.dart';
+export 'components/form_field.dart';
 export 'package:provider/provider.dart';
 
 class ProviderBoilerplate extends StatelessWidget {

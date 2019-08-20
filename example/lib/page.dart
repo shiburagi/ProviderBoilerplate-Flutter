@@ -7,6 +7,7 @@ List<BottomNavigationBarItem> barItems() {
   return [
     BottomNavigationBarItem(title: Text("BUTTON"), icon: Icon(Icons.title)),
     BottomNavigationBarItem(title: Text("TEXTFIELD"), icon: Icon(Icons.title)),
+    BottomNavigationBarItem(title: Text("DROPDOWN"), icon: Icon(Icons.title)),
   ];
 }
 
@@ -26,6 +27,7 @@ class Page extends StatelessWidget {
           builder: (context, snapshot) {
             return FloatingActionButton.extended(
               onPressed: themeBloc.toggle,
+              icon: Icon(snapshot.data == Brightness.light ?Icons.brightness_3:Icons.wb_sunny),
               label: Text(snapshot.data == Brightness.light ? "Dark" : "Light"),
             );
           }),

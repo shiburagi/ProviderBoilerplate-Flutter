@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class FillButton extends RaisedButton {
-
+class DecorButton extends RaisedButton {
   /// Create a filled button.
   ///
   /// The [elevation], [highlightElevation], [disabledElevation], and
   /// [clipBehavior] arguments must not be null. Additionally,  [elevation],
   /// [highlightElevation], and [disabledElevation] must be non-negative.
-  const FillButton({
+  const DecorButton({
     this.fullWidth = false,
     this.borderSide,
     this.type,
@@ -83,44 +82,36 @@ class FillButton extends RaisedButton {
       case ButtonVariant.flat:
         return buildFlatButton(context);
       default:
-        return buildRawMaterialButton(context);
+        return buildRaisedButton(context);
     }
   }
 
   Widget buildFlatButton(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
 
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
         minWidth: this.fullWidth ? double.maxFinite : null,
         buttonColor: Colors.transparent);
-    return RawMaterialButton(
-      onPressed: onPressed,
-      onHighlightChanged: onHighlightChanged,
-      fillColor: getFillColor(this, buttonTheme),
-      textStyle:
-          theme.textTheme.button.copyWith(color: buttonColors(context, type)),
-      focusColor: buttonTheme.getFocusColor(this),
-      hoverColor: buttonTheme.getHoverColor(this),
-      highlightColor: buttonTheme.getHighlightColor(this),
-      splashColor: buttonTheme.getSplashColor(this),
-      elevation: buttonTheme.getElevation(this),
-      focusElevation: buttonTheme.getFocusElevation(this),
-      hoverElevation: buttonTheme.getHoverElevation(this),
-      highlightElevation: buttonTheme.getHighlightElevation(this),
-      disabledElevation: buttonTheme.getDisabledElevation(this),
-      padding: buttonTheme.getPadding(this),
-      constraints: buttonTheme.getConstraints(this),
-      shape: buttonTheme.getShape(this),
-      clipBehavior: clipBehavior ?? Clip.none,
-      focusNode: focusNode,
-      materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
-      animationDuration: buttonTheme.getAnimationDuration(this),
-      child: child,
+    return ButtonTheme.fromButtonThemeData(
+      data: buttonTheme,
+      child: FlatButton(
+        onPressed: onPressed,
+        onHighlightChanged: onHighlightChanged,
+        textColor:buttonColors(context, type),
+        focusColor: buttonTheme.getFocusColor(this),
+        hoverColor: buttonTheme.getHoverColor(this),
+        highlightColor: buttonTheme.getHighlightColor(this),
+        splashColor: buttonTheme.getSplashColor(this),
+        padding: buttonTheme.getPadding(this),
+        shape: buttonTheme.getShape(this),
+        clipBehavior: clipBehavior ?? Clip.none,
+        focusNode: focusNode,
+        materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
+        child: child,
+      ),
     );
   }
 
-  RawMaterialButton buildRawMaterialButton(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+  Widget buildRaisedButton(BuildContext context) {
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
       buttonColor: buttonColors(context, type),
       colorScheme: ButtonTheme.of(context)
@@ -128,36 +119,35 @@ class FillButton extends RaisedButton {
           .copyWith(brightness: buttonTextColor(type)),
       minWidth: this.fullWidth ? double.maxFinite : null,
     );
-    return RawMaterialButton(
-      onPressed: onPressed,
-      onHighlightChanged: onHighlightChanged,
-      clipBehavior: clipBehavior ?? Clip.none,
-      fillColor: getFillColor(this, buttonTheme),
-      textStyle: theme.textTheme.button
-          .copyWith(color: buttonTheme.getTextColor(this)),
-      focusColor: buttonTheme.getFocusColor(this),
-      hoverColor: buttonTheme.getHoverColor(this),
-      highlightColor: buttonTheme.getHighlightColor(this),
-      splashColor: buttonTheme.getSplashColor(this),
-      elevation: buttonTheme.getElevation(this),
-      focusElevation: buttonTheme.getFocusElevation(this),
-      hoverElevation: buttonTheme.getHoverElevation(this),
-      highlightElevation: buttonTheme.getHighlightElevation(this),
-      disabledElevation: buttonTheme.getDisabledElevation(this),
-      padding: buttonTheme.getPadding(this),
-      constraints: buttonTheme.getConstraints(this),
-      shape: variant == ButtonVariant.raised
-          ? buttonTheme.getShape(this)
-          : createShape(context),
-      focusNode: focusNode,
-      animationDuration: buttonTheme.getAnimationDuration(this),
-      materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
-      child: child,
+    return ButtonTheme.fromButtonThemeData(
+      data: buttonTheme,
+      child: RaisedButton(
+        onPressed: onPressed,
+        onHighlightChanged: onHighlightChanged,
+        clipBehavior: clipBehavior ?? Clip.none,
+        textColor:  buttonTheme.getTextColor(this),
+        focusColor: buttonTheme.getFocusColor(this),
+        hoverColor: buttonTheme.getHoverColor(this),
+        highlightColor: buttonTheme.getHighlightColor(this),
+        splashColor: buttonTheme.getSplashColor(this),
+        elevation: buttonTheme.getElevation(this),
+        focusElevation: buttonTheme.getFocusElevation(this),
+        hoverElevation: buttonTheme.getHoverElevation(this),
+        highlightElevation: buttonTheme.getHighlightElevation(this),
+        disabledElevation: buttonTheme.getDisabledElevation(this),
+        padding: buttonTheme.getPadding(this),
+        shape: variant == ButtonVariant.raised
+            ? buttonTheme.getShape(this)
+            : createShape(context),
+        focusNode: focusNode,
+        animationDuration: buttonTheme.getAnimationDuration(this),
+        materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
+        child: child,
+      ),
     );
   }
 
   Widget buildOutlineButton(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
       minWidth: this.fullWidth ? double.maxFinite : null,
     );

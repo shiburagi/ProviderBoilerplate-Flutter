@@ -1,49 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider_boilerplate/components/form_field.dart';
 
-class DecorTextField extends TextFormField {
+class DecorTextField extends StatelessWidget {
   DecorTextField({
-    this.variant = TextFieldVariant.normal,
-    Key key,
-    TextEditingController controller,
-    String initialValue,
-    FocusNode focusNode,
+    this.variant = FormFieldVariant.normal,
     this.decoration = const InputDecoration(),
-    TextInputType keyboardType,
-    TextCapitalization textCapitalization = TextCapitalization.none,
-    TextInputAction textInputAction,
-    TextStyle style,
-    StrutStyle strutStyle,
-    TextDirection textDirection,
-    TextAlign textAlign = TextAlign.start,
-    bool autofocus = false,
-    bool readOnly = false,
-    bool showCursor,
-    bool obscureText = false,
-    bool autocorrect = true,
-    bool autovalidate = false,
-    bool maxLengthEnforced = true,
-    int maxLines = 1,
-    int minLines,
-    bool expands = false,
-    int maxLength,
-    ValueChanged<String> onChanged,
-    VoidCallback onEditingComplete,
-    ValueChanged<String> onFieldSubmitted,
-    FormFieldSetter<String> onSaved,
-    FormFieldValidator<String> validator,
-    List<TextInputFormatter> inputFormatters,
-    bool enabled = true,
-    double cursorWidth = 2.0,
-    Radius cursorRadius,
-    Color cursorColor,
-    Brightness keyboardAppearance,
-    EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
-    bool enableInteractiveSelection = true,
-    InputCounterWidgetBuilder buildCounter,
+    this.formFieldColor = FormFieldColor.primary,
+    Key key,
+    this.controller,
+    this.initialValue,
+    this.focusNode,
+    this.keyboardType,
+    this.textInputAction,
+    this.style,
+    this.strutStyle,
+    this.textDirection,
+    this.showCursor,
+    this.minLines,
+    this.maxLength,
+    this.onChanged,
+    this.onEditingComplete,
+    this.onFieldSubmitted,
+    this.onSaved,
+    this.validator,
+    this.inputFormatters,
+    this.cursorRadius,
+    this.cursorColor,
+    this.keyboardAppearance,
+    this.buildCounter,
+    this.cardEffect = false,
+    this.elevation = 1.0,
+    
   }) : super(
           key: key,
-          controller:controller,
+        );
+  final InputDecoration decoration;
+  final FormFieldVariant variant;
+  final FormFieldColor formFieldColor;
+  final TextEditingController controller;
+  final String initialValue;
+  final FocusNode focusNode;
+  final TextInputType keyboardType;
+  final TextCapitalization textCapitalization = TextCapitalization.none;
+  final TextInputAction textInputAction;
+  final TextStyle style;
+  final StrutStyle strutStyle;
+  final TextDirection textDirection;
+  final TextAlign textAlign = TextAlign.start;
+  final bool autofocus = false;
+  final bool readOnly = false;
+  final bool showCursor;
+  final bool obscureText = false;
+  final bool autocorrect = true;
+  final bool autovalidate = false;
+  final bool maxLengthEnforced = true;
+  final int maxLines = 1;
+  final int minLines;
+  final bool expands = false;
+  final int maxLength;
+  final ValueChanged<String> onChanged;
+  final VoidCallback onEditingComplete;
+  final ValueChanged<String> onFieldSubmitted;
+  final FormFieldSetter<String> onSaved;
+  final FormFieldValidator<String> validator;
+  final List<TextInputFormatter> inputFormatters;
+  final bool enabled = true;
+  final double cursorWidth = 2.0;
+  final Radius cursorRadius;
+  final Color cursorColor;
+  final Brightness keyboardAppearance;
+  final EdgeInsets scrollPadding = const EdgeInsets.all(20.0);
+  final bool enableInteractiveSelection = true;
+  final InputCounterWidgetBuilder buildCounter;
+
+  final bool cardEffect;
+  final double elevation;
+  
+  @override
+  Widget build(BuildContext context) {
+    ThemeData data = Theme.of(context);
+    return Card(
+      elevation: cardEffect ? elevation : 0,
+      child: Theme(
+        data: data.copyWith(
+          primaryColor: formFieldColor == FormFieldColor.primary
+              ? data.primaryColor
+              : data.accentColor,
+        ),
+        child: TextFormField(
+          key: key,
+          controller: controller,
           focusNode: focusNode,
           decoration: getDecoration(variant, decoration),
           keyboardType: keyboardType,
@@ -75,49 +122,8 @@ class DecorTextField extends TextFormField {
           keyboardAppearance: keyboardAppearance,
           enableInteractiveSelection: enableInteractiveSelection,
           buildCounter: buildCounter,
-        );
-  final InputDecoration decoration;
-  final TextFieldVariant variant;
-  @override
-  createState() {
-    return super.createState();
-  }
-
-  static getDecoration(
-      TextFieldVariant borderType, InputDecoration decoration) {
-    InputBorder border;
-    switch (borderType) {
-      case TextFieldVariant.outline:
-        border = OutlineInputBorder();
-        break;
-      case TextFieldVariant.filled:
-        return decoration.copyWith(
-          contentPadding: EdgeInsets.fromLTRB(12, 16, 12, 16),
-          filled: true,
-        );
-      case TextFieldVariant.blurred:
-        border = OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.transparent));
-
-        return decoration.copyWith(
-          filled: true,
-          border: border,
-          enabledBorder: border,
-          focusedBorder: border,
-          focusedErrorBorder: border,
-        );
-      default:
-        return decoration;
-    }
-    return decoration.copyWith(
-      border: border,
+        ),
+      ),
     );
   }
-}
-
-enum TextFieldVariant {
-  normal,
-  outline,
-  filled,
-  blurred,
 }
