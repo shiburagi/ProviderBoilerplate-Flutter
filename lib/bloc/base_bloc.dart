@@ -14,7 +14,7 @@ abstract class BaseBloc {
   Size get screenSize => MediaQuery.of(context).size;
   EdgeInsets get screenPadding => MediaQuery.of(context).padding;
 
-  Object get arguments => ModalRoute.of(context).settings.arguments;
+  Object arguments(BuildContext context) => ModalRoute.of(context).settings.arguments;
 
   void register(BuildContext context) {
     this._context = context;
