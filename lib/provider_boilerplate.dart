@@ -46,7 +46,7 @@ Provider<T> registerProvider<T>(T blocBase) {
   );
 }
 
-class SplashPage<T> extends StatelessWidget {
+class SplashPage<T> extends StatefulWidget {
   final WidgetBuilder splash;
   final WidgetBuilder auth;
   final WidgetBuilder landing;
@@ -62,16 +62,23 @@ class SplashPage<T> extends StatelessWidget {
   });
 
   @override
+  _SplashPageState<T> createState() => _SplashPageState<T>();
+}
+
+class _SplashPageState<T> extends State<SplashPage> {
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<T>(
-        future: this.onStart(context),
+        future: this.widget.onStart(context),
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return hasAccess(snapshot.data) ? landing(context) : auth(context);
+          if (snapshot.connectionState != ConnectionState.waiting) {
+            return widget.hasAccess(snapshot.data)
+                ? widget.landing(context)
+                : widget.auth(context);
           }
 
-          return this.splash != null
-              ? this.splash(context)
+          return this.widget.splash != null
+              ? this.widget.splash(context)
               : Scaffold(
                   body: Container(
                     color: Theme.of(context).primaryColor,
