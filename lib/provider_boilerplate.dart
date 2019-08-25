@@ -66,12 +66,15 @@ class SplashPage<T> extends StatefulWidget {
 }
 
 class _SplashPageState<T> extends State<SplashPage> {
+  bool willReceiveNewData = true;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<T>(
         future: this.widget.onStart(context),
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-          if (snapshot.connectionState != ConnectionState.waiting) {
+          if (!willReceiveNewData ||
+              snapshot.connectionState == ConnectionState.done) {
+            willReceiveNewData = false;
             return widget.hasAccess(snapshot.data)
                 ? widget.landing(context)
                 : widget.auth(context);
