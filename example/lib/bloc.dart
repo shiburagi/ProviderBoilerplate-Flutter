@@ -6,39 +6,29 @@ import 'package:provider_boilerplate_example/components/button_page.dart';
 import 'package:provider_boilerplate_example/components/dropdown_page.dart';
 import 'package:provider_boilerplate_example/components/textfield_page.dart';
 
-class ThemeBloc extends BaseBloc {
-  final StreamController<Brightness> _streamController = StreamController();
-  Stream<Brightness> stream;
-  Brightness _brightness;
+class ThemeBloc extends BaseBloc<ThemeMode> {
+  ThemeMode _mode;
 
-  ThemeBloc() {
-    stream = _streamController.stream.asBroadcastStream();
+  ThemeBloc():super(){
     toggle();
   }
 
   toggle() {
-    _brightness =
-        _brightness == Brightness.light ? Brightness.dark : Brightness.light;
-    _streamController.sink.add(_brightness);
-  }
-
-  @override
-  void dispose() {
-    _streamController.close();
+    _mode =
+        _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    sink.add(_mode);
   }
 }
 
-class PageBloc extends BaseBloc {
-  final StreamController<int> _streamController = StreamController();
+class PageBloc extends BaseBloc<int> {
   Stream<int> stream;
 
-  PageBloc() {
-    stream = _streamController.stream.asBroadcastStream();
+  PageBloc():super() {
     setPage(0);
   }
 
   setPage(int page) {
-    _streamController.sink.add(page);
+    sink.add(page);
   }
 
   Widget getPage(int index) {
@@ -54,8 +44,5 @@ class PageBloc extends BaseBloc {
     }
   }
 
-  @override
-  void dispose() {
-    _streamController.close();
-  }
+  
 }

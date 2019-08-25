@@ -22,13 +22,13 @@ class Page extends StatelessWidget {
       appBar: AppBar(
         title: Text(this.title),
       ),
-      floatingActionButton: StreamBuilder<Brightness>(
+      floatingActionButton: StreamBuilder<ThemeMode>(
           stream: themeBloc.stream,
           builder: (context, snapshot) {
             return FloatingActionButton.extended(
               onPressed: themeBloc.toggle,
-              icon: Icon(snapshot.data == Brightness.light ?Icons.brightness_3:Icons.wb_sunny),
-              label: Text(snapshot.data == Brightness.light ? "Dark" : "Light"),
+              icon: Icon(snapshot.data == ThemeMode.light ?Icons.brightness_3:Icons.wb_sunny),
+              label: Text(snapshot.data == ThemeMode.light ? "Dark" : "Light"),
             );
           }),
       body: SingleChildScrollView(
