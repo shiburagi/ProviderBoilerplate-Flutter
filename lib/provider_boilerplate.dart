@@ -66,7 +66,7 @@ class SplashPage<T> extends StatelessWidget {
     return FutureBuilder<T>(
         future: this.onStart(context),
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-          if (snapshot.data != null) {
+          if (snapshot.connectionState == ConnectionState.done) {
             return hasAccess(snapshot.data) ? landing(context) : auth(context);
           }
 
