@@ -6,6 +6,7 @@ import 'bloc/base_bloc.dart';
 import 'package:flutter/foundation.dart';
 
 export 'bloc/base_bloc.dart';
+export 'bloc/bloc_state.dart';
 export 'components/button.dart';
 export 'components/dropdown.dart';
 export 'components/textfield.dart';
