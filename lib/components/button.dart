@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider_boilerplate/palettes/colors.dart';
 
 class DecorButton extends RaisedButton {
   /// Create a filled button.
@@ -244,9 +245,9 @@ Color buttonColors(BuildContext context, ButtonType type) {
     case ButtonType.danger:
       return Theme.of(context).errorColor;
     case ButtonType.warning:
-      return Color.fromRGBO(255, 193, 7, 1);
+      return ColorsPalette.warning;
     case ButtonType.success:
-      return Colors.green;
+      return ColorsPalette.success;
     default:
       return null;
   }

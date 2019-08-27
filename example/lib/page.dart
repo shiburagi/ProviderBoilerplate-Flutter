@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider_boilerplate/provider_boilerplate.dart';
 import 'package:provider_boilerplate_example/bloc.dart';
 
