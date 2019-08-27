@@ -57,18 +57,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ProviderBoilerplate(
-      errorWidget: (context, errorDetails)=>Container(),
+      errorWidget: (context, errorDetails) => Container(),
       providers: [
         registerProvider(themeBloc),
         registerProvider(PageBloc()),
       ],
-      child: StreamBuilder<Brightness>(
+      child: StreamBuilder<ThemeMode>(
           stream: themeBloc.stream,
           builder: (context, snapshot) {
-            Brightness brightness = snapshot.data;
+            ThemeMode mode = snapshot.data;
             return MaterialApp(
-              theme:
-                  ThemeData(accentColor: Colors.purple, brightness: brightness),
+              themeMode: mode,
+              theme: ThemeData(
+                accentColor: Colors.purple,
+              ),
               home: SplashPage(
                 auth: (c) => Page(title: "Login Page"),
                 landing: (c) => Page(title: "User Page"),
