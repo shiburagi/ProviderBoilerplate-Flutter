@@ -59,7 +59,7 @@ getDecoration(FormFieldVariant borderType, InputDecoration decoration) {
 }
 
 enum FormFieldVariant {
-  normal,
+  default_,
   outlined,
   filled,
   blurred,

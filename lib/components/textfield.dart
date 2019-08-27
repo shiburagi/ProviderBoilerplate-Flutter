@@ -4,7 +4,7 @@ import 'package:provider_boilerplate/components/form_field.dart';
 
 class DecorTextField extends StatelessWidget {
   DecorTextField({
-    this.variant = FormFieldVariant.normal,
+    this.variant = FormFieldVariant.default_,
     this.decoration = const InputDecoration(),
     this.formFieldColor = FormFieldColor.primary,
     Key key,

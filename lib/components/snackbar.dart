@@ -10,7 +10,7 @@ makeSnackbar(
     ));
 
 enum SnackbarType {
-  normal,
+  default_,
   success,
   info,
   danger,
@@ -18,7 +18,7 @@ enum SnackbarType {
 }
 
 Map<SnackbarType, Color> snackbarBackgroundColor(BuildContext context) => {
-      SnackbarType.normal: Theme.of(context).cardColor,
+      SnackbarType.default_: Theme.of(context).cardColor,
       SnackbarType.success: Colors.green,
       SnackbarType.info: Theme.of(context).accentColor,
       SnackbarType.danger: Theme.of(context).errorColor,
@@ -26,7 +26,7 @@ Map<SnackbarType, Color> snackbarBackgroundColor(BuildContext context) => {
     };
 
 Map<SnackbarType, Color> snackbarForegroundColor(BuildContext context) => {
-      SnackbarType.normal: Theme.of(context).textTheme.body1.color,
+      SnackbarType.default_: Theme.of(context).textTheme.body1.color,
       SnackbarType.success: Colors.white,
       SnackbarType.success: Colors.white,
       SnackbarType.info: Colors.white,

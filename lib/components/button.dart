@@ -220,7 +220,7 @@ class DecorButton extends RaisedButton {
 }
 
 enum ButtonType {
-  normal,
+  default_,
   primary,
   accent,
   danger,
