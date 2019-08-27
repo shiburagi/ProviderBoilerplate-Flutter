@@ -102,6 +102,7 @@ class DecorTextField extends StatelessWidget {
         keyboardType: keyboardType,
         textInputAction: textInputAction,
         style: style,
+        validator: validator,
         strutStyle: strutStyle,
         textAlign: textAlign,
         textDirection: textDirection,
