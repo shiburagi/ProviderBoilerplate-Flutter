@@ -26,6 +26,18 @@ getDecoration(FormFieldVariant borderType, InputDecoration decoration) {
         focusedErrorBorder: border,
       );
       break;
+    case FormFieldVariant.blurred_circular:
+      border = UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.transparent),
+          borderRadius: BorderRadius.circular(10000));
+
+      decoration = decoration.copyWith(
+        filled: true,
+        enabledBorder: border,
+        focusedBorder: border,
+        focusedErrorBorder: border,
+      );
+      break;
     case FormFieldVariant.transparent:
       border = UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.transparent));
@@ -53,6 +65,7 @@ enum FormFieldVariant {
   blurred,
   rectOutlined,
   transparent,
+  blurred_circular,
 }
 
 enum FormFieldColor {
