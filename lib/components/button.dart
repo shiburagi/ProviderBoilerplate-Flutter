@@ -16,6 +16,7 @@ class DecorButton extends RaisedButton {
     this.variant = ButtonVariant.raised,
     this.loading,
     this.isLoading = false,
+    this.hasLoading = false,
     Key key,
     @required VoidCallback onPressed,
     ValueChanged<bool> onHighlightChanged,
@@ -75,6 +76,7 @@ class DecorButton extends RaisedButton {
           child: child,
         );
   final bool isLoading;
+  final bool hasLoading;
   final ButtonType type;
   final ButtonVariant variant;
   final bool fullWidth;
@@ -82,6 +84,7 @@ class DecorButton extends RaisedButton {
   final Widget loading;
   @override
   Widget build(BuildContext context) {
+    final ButtonThemeData buttonTheme = ButtonTheme.of(context);
     return AbsorbPointer(
       child: buildButton(context),
       absorbing: isLoading,
@@ -232,27 +235,30 @@ class DecorButton extends RaisedButton {
   }
 
   Widget getChild(buttonTheme) {
-    return Row(
-      children: <Widget>[
-        Visibility(
-            visible: isLoading,
-            child: Container(
-              width: 24,
-            )),
-        Expanded(
-          flex: 1,
-          child: Center(child: child),
-        ),
-        Visibility(
-          visible: isLoading,
-          child: loading ??
-              SpinKitCircle(
-                size: 24,
-                color: buttonTheme.getTextColor(this),
+    return hasLoading
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                width: 26,
               ),
-        ),
-      ],
-    );
+              fullWidth ? Expanded(child: Center(child: child)) : child,
+              Container(
+                width: 18,
+                height: 18,
+                margin: EdgeInsets.only(left: 8),
+                child: Visibility(
+                  visible: isLoading,
+                  child: loading ??
+                      SpinKitCircle(
+                        size: 18,
+                        color: buttonTheme.getTextColor(this),
+                      ),
+                ),
+              ),
+            ],
+          )
+        : child;
   }
 }
 
