@@ -14,6 +14,8 @@ class DecorButton extends RaisedButton {
     this.borderSide,
     this.type,
     this.variant = ButtonVariant.raised,
+    this.loading,
+    this.isLoading = false,
     Key key,
     @required VoidCallback onPressed,
     ValueChanged<bool> onHighlightChanged,
@@ -27,9 +29,8 @@ class DecorButton extends RaisedButton {
     Color highlightColor,
     Color splashColor,
     Brightness colorBrightness,
-    this.isLoading = false,
     double elevation,
-    double loadingElevation=0,
+    double loadingElevation = 0,
     double focusElevation,
     double hoverElevation,
     double highlightElevation,
@@ -78,7 +79,7 @@ class DecorButton extends RaisedButton {
   final ButtonVariant variant;
   final bool fullWidth;
   final BorderSide borderSide;
-
+  final Widget loading;
   @override
   Widget build(BuildContext context) {
     return AbsorbPointer(
@@ -244,10 +245,11 @@ class DecorButton extends RaisedButton {
         ),
         Visibility(
           visible: isLoading,
-          child: SpinKitCircle(
-            size: 24,
-            color: buttonTheme.getTextColor(this),
-          ),
+          child: loading ??
+              SpinKitCircle(
+                size: 24,
+                color: buttonTheme.getTextColor(this),
+              ),
         ),
       ],
     );
