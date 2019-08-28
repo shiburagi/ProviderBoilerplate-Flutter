@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider_boilerplate/palettes/colors.dart';
 
 class DecorButton extends RaisedButton {
@@ -26,7 +27,9 @@ class DecorButton extends RaisedButton {
     Color highlightColor,
     Color splashColor,
     Brightness colorBrightness,
+    this.isLoading = false,
     double elevation,
+    double loadingElevation=0,
     double focusElevation,
     double hoverElevation,
     double highlightElevation,
@@ -57,7 +60,7 @@ class DecorButton extends RaisedButton {
           highlightColor: highlightColor,
           splashColor: splashColor,
           colorBrightness: colorBrightness,
-          elevation: elevation,
+          elevation: isLoading ? loadingElevation : elevation,
           focusElevation: focusElevation,
           hoverElevation: hoverElevation,
           highlightElevation: highlightElevation,
@@ -70,6 +73,7 @@ class DecorButton extends RaisedButton {
           animationDuration: animationDuration,
           child: child,
         );
+  final bool isLoading;
   final ButtonType type;
   final ButtonVariant variant;
   final bool fullWidth;
@@ -77,6 +81,13 @@ class DecorButton extends RaisedButton {
 
   @override
   Widget build(BuildContext context) {
+    return AbsorbPointer(
+      child: buildButton(context),
+      absorbing: isLoading,
+    );
+  }
+
+  Widget buildButton(BuildContext context) {
     switch (variant) {
       case ButtonVariant.outlined:
         return buildOutlineButton(context);
@@ -88,7 +99,6 @@ class DecorButton extends RaisedButton {
   }
 
   Widget buildFlatButton(BuildContext context) {
-
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
         minWidth: this.fullWidth ? double.maxFinite : null,
         buttonColor: Colors.transparent);
@@ -97,7 +107,7 @@ class DecorButton extends RaisedButton {
       child: FlatButton(
         onPressed: onPressed,
         onHighlightChanged: onHighlightChanged,
-        textColor:buttonColors(context, type),
+        textColor: buttonColors(context, type),
         focusColor: buttonTheme.getFocusColor(this),
         hoverColor: buttonTheme.getHoverColor(this),
         highlightColor: buttonTheme.getHighlightColor(this),
@@ -107,7 +117,7 @@ class DecorButton extends RaisedButton {
         clipBehavior: clipBehavior ?? Clip.none,
         focusNode: focusNode,
         materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
-        child: child,
+        child: getChild(buttonTheme),
       ),
     );
   }
@@ -115,6 +125,7 @@ class DecorButton extends RaisedButton {
   Widget buildRaisedButton(BuildContext context) {
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
       buttonColor: buttonColors(context, type),
+      disabledColor: buttonColors(context, type),
       colorScheme: ButtonTheme.of(context)
           .colorScheme
           .copyWith(brightness: buttonTextColor(type)),
@@ -126,7 +137,7 @@ class DecorButton extends RaisedButton {
         onPressed: onPressed,
         onHighlightChanged: onHighlightChanged,
         clipBehavior: clipBehavior ?? Clip.none,
-        textColor:  buttonTheme.getTextColor(this),
+        textColor: buttonTheme.getTextColor(this),
         focusColor: buttonTheme.getFocusColor(this),
         hoverColor: buttonTheme.getHoverColor(this),
         highlightColor: buttonTheme.getHighlightColor(this),
@@ -143,7 +154,7 @@ class DecorButton extends RaisedButton {
         focusNode: focusNode,
         animationDuration: buttonTheme.getAnimationDuration(this),
         materialTapTargetSize: buttonTheme.getMaterialTapTargetSize(this),
-        child: child,
+        child: getChild(buttonTheme),
       ),
     );
   }
@@ -169,7 +180,7 @@ class DecorButton extends RaisedButton {
         padding: buttonTheme.getPadding(this),
         shape: variant == ButtonVariant.outlined ? shape : createShape(context),
         focusNode: focusNode,
-        child: child,
+        child: getChild(buttonTheme),
       ),
     );
   }
@@ -217,6 +228,29 @@ class DecorButton extends RaisedButton {
           borderRadius: BorderRadius.all(Radius.circular(10000)),
         );
     }
+  }
+
+  Widget getChild(buttonTheme) {
+    return Row(
+      children: <Widget>[
+        Visibility(
+            visible: isLoading,
+            child: Container(
+              width: 24,
+            )),
+        Expanded(
+          flex: 1,
+          child: Center(child: child),
+        ),
+        Visibility(
+          visible: isLoading,
+          child: SpinKitCircle(
+            size: 24,
+            color: buttonTheme.getTextColor(this),
+          ),
+        ),
+      ],
+    );
   }
 }
 

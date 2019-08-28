@@ -71,6 +71,14 @@ class ButtonPage extends StatelessWidget {
             type: ButtonType.danger,
             child: Text("Danger"),
           ),
+          DecorButton(
+            fullWidth: true,
+            variant: variant,
+            onPressed: () {},
+            isLoading: true,
+            type: ButtonType.success,
+            child: Text("Danger"),
+          ),
           Container(
             height: 24,
           )
