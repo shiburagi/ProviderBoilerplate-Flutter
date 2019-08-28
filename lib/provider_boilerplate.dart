@@ -12,6 +12,7 @@ export 'components/dropdown.dart';
 export 'components/textfield.dart';
 export 'components/form_field.dart';
 export 'package:provider/provider.dart';
+export 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ProviderBoilerplate extends StatelessWidget {
   final List<SingleChildCloneableWidget> providers;
