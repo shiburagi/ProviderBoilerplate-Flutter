@@ -31,6 +31,16 @@ class DecorTextField extends StatelessWidget {
     this.buildCounter,
     this.cardEffect = false,
     this.elevation = 1.0,
+    this.autofocus=false,
+    this.readOnly=false,
+    this.obscureText=false,
+    this.autocorrect=false,
+    this.autovalidate=false,
+    this.maxLengthEnforced=false,
+    this.maxLines=1,
+    this.expands=false,
+    this.enabled=true,
+    this.cursorWidth= 2.0,
   }) : super(
           key: key,
         );
@@ -47,16 +57,16 @@ class DecorTextField extends StatelessWidget {
   final StrutStyle strutStyle;
   final TextDirection textDirection;
   final TextAlign textAlign = TextAlign.start;
-  final bool autofocus = false;
-  final bool readOnly = false;
+  final bool autofocus;
+  final bool readOnly;
   final bool showCursor;
-  final bool obscureText = false;
-  final bool autocorrect = true;
-  final bool autovalidate = false;
-  final bool maxLengthEnforced = true;
-  final int maxLines = 1;
+  final bool obscureText;
+  final bool autocorrect;
+  final bool autovalidate;
+  final bool maxLengthEnforced;
+  final int maxLines;
   final int minLines;
-  final bool expands = false;
+  final bool expands;
   final int maxLength;
   final ValueChanged<String> onChanged;
   final VoidCallback onEditingComplete;
@@ -64,8 +74,8 @@ class DecorTextField extends StatelessWidget {
   final FormFieldSetter<String> onSaved;
   final FormFieldValidator<String> validator;
   final List<TextInputFormatter> inputFormatters;
-  final bool enabled = true;
-  final double cursorWidth = 2.0;
+  final bool enabled;
+  final double cursorWidth;
   final Radius cursorRadius;
   final Color cursorColor;
   final Brightness keyboardAppearance;
