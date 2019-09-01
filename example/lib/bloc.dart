@@ -18,7 +18,6 @@ class PageBloc extends BaseBloc<int> {
   PageBloc() : super() {
     setPage(0);
   }
-
   setPage(int page) {
     sink.add(page);
   }
