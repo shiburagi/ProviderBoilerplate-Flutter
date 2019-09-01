@@ -22,6 +22,7 @@ samples, guidance on mobile development, and a full API reference.
 ```
 
 ## How to use 
+
 ```dart
 import 'dart:async';
 import 'dart:math';
@@ -68,6 +69,10 @@ class _MyAppState extends State<MyApp> {
             ThemeMode mode = snapshot.data;
             return MaterialApp(
               themeMode: mode,
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                accentColor: Colors.purple,
+              ),
               theme: ThemeData(
                 accentColor: Colors.purple,
               ),
@@ -82,8 +87,67 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
 ```
 
+### BloC
+
+```dart
+class PageBloc extends BaseBloc<int> {
+  PageBloc() : super() {
+    setPage(0);
+  }
+  setPage(int page) {
+    sink.add(page);
+  }
+
+  Widget getPage([int index]) {
+    switch (index ?? data) {
+      case 0:
+        return ButtonPage();
+      case 1:
+        return TextFieldPage();
+      case 2:
+        return DropdownPage();
+      default:
+        return Container();
+    }
+  }
+}
+```
+
+### State
+
+```dart
+class Page extends StatefulWidget {
+  final String title;
+  Page({this.title});
+  @override
+  _PageState createState() => _PageState();
+}
+class _PageState extends BlocState<Page, PageBloc> {
+  @override
+  Widget build(BuildContext context) {
+    ThemeBloc themeBloc = Provider.of(context);
+    return Scaffold(
+      bottomNavigationBar: StreamBuilder<int>(
+          stream: bloc.stream,
+          builder: (context, snapshot) {
+            return BottomAppBar(
+              child: BottomNavigationBar(
+                currentIndex: snapshot.data ?? 0,
+                backgroundColor: Colors.transparent,
+                iconSize: 0,
+                elevation: 0,
+                items: barItems(),
+                onTap: bloc.setPage,
+              ),
+            );
+          }),
+    );
+  }
+}
+```
 
 ## Components
 
