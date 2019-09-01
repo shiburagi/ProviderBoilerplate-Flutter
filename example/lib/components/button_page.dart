@@ -10,7 +10,9 @@ class ButtonPage extends StatelessWidget {
         buildButtonList(context, "Flat", ButtonVariant.flat),
         buildButtonList(context, "Raised", ButtonVariant.raised),
         buildButtonList(context, "Outlined", ButtonVariant.outlined),
-        Container(height: 48,)
+        Container(
+          height: 48,
+        )
       ],
     );
   }
@@ -74,6 +76,8 @@ class ButtonPage extends StatelessWidget {
           ),
           DecorButton(
             fullWidth: false,
+            hasLoading: true,
+            isLoading: true,
             variant: variant,
             onPressed: () {},
             type: ButtonType.success,
@@ -82,9 +86,9 @@ class ButtonPage extends StatelessWidget {
           DecorButton(
             fullWidth: true,
             hasLoading: true,
+            isLoading: true,
             variant: variant,
             onPressed: () {},
-            isLoading: true,
             type: ButtonType.success,
             child: Text("Loading"),
           ),
