@@ -10,34 +10,41 @@ List<BottomNavigationBarItem> barItems() {
   ];
 }
 
-class Page extends StatelessWidget {
+class Page extends StatefulWidget {
   final String title;
   Page({this.title});
+
+  @override
+  _PageState createState() => _PageState();
+}
+
+class _PageState extends BlocState<Page, PageBloc> {
   @override
   Widget build(BuildContext context) {
-    PageBloc pageBloc = Provider.of(context);
     ThemeBloc themeBloc = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.title),
+        title: Text(this.widget.title),
       ),
       floatingActionButton: StreamBuilder<ThemeMode>(
           stream: themeBloc.stream,
           builder: (context, snapshot) {
             return FloatingActionButton.extended(
               onPressed: themeBloc.toggle,
-              icon: Icon(snapshot.data == ThemeMode.light ?Icons.brightness_3:Icons.wb_sunny),
+              icon: Icon(snapshot.data == ThemeMode.light
+                  ? Icons.brightness_3
+                  : Icons.wb_sunny),
               label: Text(snapshot.data == ThemeMode.light ? "Dark" : "Light"),
             );
           }),
       body: SingleChildScrollView(
           child: StreamBuilder<int>(
-              stream: pageBloc.stream,
+              stream: bloc.stream,
               builder: (context, snapshot) {
-                return pageBloc.getPage(snapshot.data ?? 0);
+                return bloc.getPage(snapshot.data ?? 0);
               })),
       bottomNavigationBar: StreamBuilder<int>(
-          stream: pageBloc.stream,
+          stream: bloc.stream,
           builder: (context, snapshot) {
             return BottomAppBar(
               child: BottomNavigationBar(
@@ -46,7 +53,7 @@ class Page extends StatelessWidget {
                 iconSize: 0,
                 elevation: 0,
                 items: barItems(),
-                onTap: pageBloc.setPage,
+                onTap: bloc.setPage,
               ),
             );
           }),

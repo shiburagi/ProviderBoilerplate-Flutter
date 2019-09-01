@@ -43,6 +43,10 @@ class _MyAppState extends State<MyApp> {
             ThemeMode mode = snapshot.data;
             return MaterialApp(
               themeMode: mode,
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                accentColor: Colors.purple,
+              ),
               theme: ThemeData(
                 accentColor: Colors.purple,
               ),

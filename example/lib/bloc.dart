@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider_boilerplate/provider_boilerplate.dart';
 import 'package:provider_boilerplate_example/components/button_page.dart';
@@ -7,23 +5,17 @@ import 'package:provider_boilerplate_example/components/dropdown_page.dart';
 import 'package:provider_boilerplate_example/components/textfield_page.dart';
 
 class ThemeBloc extends BaseBloc<ThemeMode> {
-  ThemeMode _mode;
-
-  ThemeBloc():super(){
-    toggle();
-  }
+  ThemeBloc() : super(initialValue: ThemeMode.light);
 
   toggle() {
-    _mode =
-        _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    ThemeMode _mode =
+        data == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     sink.add(_mode);
   }
 }
 
 class PageBloc extends BaseBloc<int> {
-  Stream<int> stream;
-
-  PageBloc():super() {
+  PageBloc() : super() {
     setPage(0);
   }
 
@@ -31,8 +23,8 @@ class PageBloc extends BaseBloc<int> {
     sink.add(page);
   }
 
-  Widget getPage(int index) {
-    switch (index) {
+  Widget getPage([int index]) {
+    switch (index ?? data) {
       case 0:
         return ButtonPage();
       case 1:
@@ -43,6 +35,4 @@ class PageBloc extends BaseBloc<int> {
         return Container();
     }
   }
-
-  
 }

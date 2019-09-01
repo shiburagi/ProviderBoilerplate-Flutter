@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class BaseBloc<T> {
-  BaseBloc() {
+  BaseBloc({T initialValue}) {
+    _controller.add(initialValue);
     initializeStream(_controller.stream.asBroadcastStream());
   }
 
   void initializeStream(Stream<T> stream) {
+    stream.listen((T data) {
+      _data = data;
+    });
     _stream = stream;
   }
 
@@ -15,6 +19,12 @@ class BaseBloc<T> {
 
   Stream<T> _stream;
   Stream<T> get stream => _stream;
+
+  T _data;
+  T get data => _data;
+
+  StreamSink<T> get sink => _controller.sink;
+  StreamController<T> get streamController => _controller;
 
   BuildContext _context;
   BuildContext get context => _context;
@@ -41,6 +51,4 @@ class BaseBloc<T> {
   void dispose() {
     _controller.close();
   }
-
-  StreamSink<T> get sink => _controller.sink;
 }
