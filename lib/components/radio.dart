@@ -42,6 +42,7 @@ class DecorRadioGroup<T> extends FormField<T> {
                                   ? EdgeInsets.fromLTRB(0, 0, 0, _gap)
                                   : EdgeInsets.fromLTRB(0, 0, _gap, 0),
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Radio<T>(
                                 activeColor:
@@ -66,9 +67,8 @@ class DecorRadioGroup<T> extends FormField<T> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: children,
                       )
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                    : Wrap(
+                        direction: Axis.horizontal,
                         children: children,
                       ),
               );
