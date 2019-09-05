@@ -10,6 +10,7 @@ class DecorDropDown<T> extends StatelessWidget {
     this.itemBuilder,
     this.onChanged,
     this.onSaved,
+    this.formFieldColor,
     this.validator,
     this.hint,
     this.variant,
@@ -24,6 +25,7 @@ class DecorDropDown<T> extends StatelessWidget {
   final FormFieldSetter<T> onSaved;
   final FormFieldValidator<T> validator;
   final FormFieldVariant variant;
+  final FormFieldColor formFieldColor;
   final Widget hint;
   final bool cardEffect;
   final double elevation;
@@ -32,25 +34,34 @@ class DecorDropDown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData data = Theme.of(context);
+
     return cardEffect
         ? Card(
             elevation: elevation,
-            child: buildTheme(),
+            child: buildTheme(data),
           )
-        : buildTheme();
+        : buildTheme(data);
   }
 
-  DropdownButtonFormField buildTheme() {
-    return DropdownButtonFormField(
-      key: key,
-      onSaved: onSaved,
-      value: value,
-      validator: validator,
-      items:
-          itemBuilder == null ? items : List.generate(itemCount, itemBuilder),
-      decoration: getDecoration(variant, decoration),
-      hint: hint,
-      onChanged: onChanged,
+  Widget buildTheme(data) {
+    return Theme(
+      data: data.copyWith(
+        primaryColor: formFieldColor == FormFieldColor.primary
+            ? data.primaryColor
+            : data.accentColor,
+      ),
+      child: DropdownButtonFormField(
+        key: key,
+        onSaved: onSaved,
+        value: value,
+        validator: validator,
+        items:
+            itemBuilder == null ? items : List.generate(itemCount, itemBuilder),
+        decoration: getDecoration(variant, decoration),
+        hint: hint,
+        onChanged: onChanged,
+      ),
     );
   }
 }

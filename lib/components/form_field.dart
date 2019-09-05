@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-getDecoration(FormFieldVariant borderType, InputDecoration decoration) {
+InputDecoration getDecoration(FormFieldVariant borderType, InputDecoration decoration) {
   InputBorder border;
   switch (borderType) {
     case FormFieldVariant.outlined:
@@ -57,6 +57,8 @@ getDecoration(FormFieldVariant borderType, InputDecoration decoration) {
     border: border,
   );
 }
+
+
 
 enum FormFieldVariant {
   default_,

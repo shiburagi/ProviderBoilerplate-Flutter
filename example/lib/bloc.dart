@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider_boilerplate/provider_boilerplate.dart';
 import 'package:provider_boilerplate_example/components/button_page.dart';
 import 'package:provider_boilerplate_example/components/dropdown_page.dart';
+import 'package:provider_boilerplate_example/components/radio_page.dart';
 import 'package:provider_boilerplate_example/components/textfield_page.dart';
 
 class ThemeBloc extends BaseBloc<ThemeMode> {
@@ -30,6 +31,8 @@ class PageBloc extends BaseBloc<int> {
         return TextFieldPage();
       case 2:
         return DropdownPage();
+      case 3:
+        return RadioPage();
       default:
         return Container();
     }

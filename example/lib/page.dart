@@ -7,6 +7,7 @@ List<BottomNavigationBarItem> barItems() {
     BottomNavigationBarItem(title: Text("BUTTON"), icon: Icon(Icons.title)),
     BottomNavigationBarItem(title: Text("TEXTFIELD"), icon: Icon(Icons.title)),
     BottomNavigationBarItem(title: Text("DROPDOWN"), icon: Icon(Icons.title)),
+    BottomNavigationBarItem(title: Text("RADIO"), icon: Icon(Icons.title)),
   ];
 }
 
@@ -48,6 +49,7 @@ class _PageState extends BlocState<Page, PageBloc> {
           builder: (context, snapshot) {
             return BottomAppBar(
               child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
                 currentIndex: snapshot.data ?? 0,
                 backgroundColor: Colors.transparent,
                 iconSize: 0,
