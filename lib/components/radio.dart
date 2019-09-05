@@ -4,8 +4,9 @@ import 'package:provider_boilerplate/components/form_field.dart';
 class DecorRadioGroup<T> extends FormField<T> {
   DecorRadioGroup({
     @required this.items,
-    this.vertical = false,
+    this.groupStyle = RadioGroupStyle.horizontal,
     this.onChanged,
+    this.columnCount = 2,
     this.value,
     this.formFieldColor,
     this.itemCount,
@@ -19,8 +20,7 @@ class DecorRadioGroup<T> extends FormField<T> {
     this.elevation = 1.0,
     this.decoration = const BoxDecoration(),
     Key key,
-  })  : this.gap = gap ?? (vertical ? 0.0 : 16.0),
-        this.padding = padding ??
+  })  : this.padding = padding ??
             (cardEffect
                 ? EdgeInsets.symmetric(vertical: 8, horizontal: 16)
                 : EdgeInsets.all(0)),
@@ -28,7 +28,8 @@ class DecorRadioGroup<T> extends FormField<T> {
             key: key,
             validator: validator,
             builder: (FormFieldState<T> field) {
-              double _gap = gap ?? (vertical ? 0.0 : 16.0);
+              double _gap =
+                  gap ?? (groupStyle == RadioGroupStyle.vertical ? 0.0 : 16.0);
               int i = 0;
               List<Widget> children = items
                   .map((RadioItem item) => InkWell(
@@ -38,7 +39,7 @@ class DecorRadioGroup<T> extends FormField<T> {
                         child: Container(
                           margin: i++ == items.length - 1
                               ? null
-                              : vertical
+                              : groupStyle == RadioGroupStyle.vertical
                                   ? EdgeInsets.fromLTRB(0, 0, 0, _gap)
                                   : EdgeInsets.fromLTRB(0, 0, _gap, 0),
                           child: Row(
@@ -49,7 +50,7 @@ class DecorRadioGroup<T> extends FormField<T> {
                                     formFieldColor == FormFieldColor.primary
                                         ? Theme.of(field.context).primaryColor
                                         : Theme.of(field.context).accentColor,
-                                groupValue: field.value,
+                                groupValue: field.value ?? value,
                                 value: item.value,
                                 onChanged: field.didChange,
                               ),
@@ -61,16 +62,36 @@ class DecorRadioGroup<T> extends FormField<T> {
                   .toList();
               Widget child = Container(
                 padding: padding,
-                child: vertical
+                child: groupStyle == RadioGroupStyle.vertical
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: children,
                       )
-                    : Wrap(
-                        direction: Axis.horizontal,
-                        children: children,
-                      ),
+                    : (groupStyle == RadioGroupStyle.grid
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: List.generate(
+                                (children.length / columnCount).ceil(),
+                                (index) => Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                            flex: 1,
+                                            child: children[index * 2]),
+                                        Expanded(
+                                            flex: 1,
+                                            child:
+                                                index * 2 + 1 < children.length
+                                                    ? children[index * 2 + 1]
+                                                    : Container()),
+                                      ],
+                                    )),
+                          )
+                        : Wrap(
+                            direction: Axis.horizontal,
+                            children: children,
+                          )),
               );
               return InputDecorator(
                 decoration: InputDecoration(
@@ -89,10 +110,11 @@ class DecorRadioGroup<T> extends FormField<T> {
               );
             });
 
+  var columnCount;
+
   final EdgeInsets padding;
-  final bool vertical;
+  final RadioGroupStyle groupStyle;
   final T value;
-  final double gap;
   final List<RadioItem<T>> items;
   final ValueChanged<T> onChanged;
   final BoxDecoration decoration;
@@ -133,4 +155,10 @@ class RadioItem<T> {
   final Widget child;
   final T value;
   final Key key;
+}
+
+enum RadioGroupStyle {
+  vertical,
+  horizontal,
+  grid,
 }

@@ -12,6 +12,18 @@ class RadioPage extends StatelessWidget {
       child: Text("example 2"),
       value: "example 2",
     ),
+    RadioItem(
+      child: Text("example 3"),
+      value: "example 3",
+    ),
+    RadioItem(
+      child: Text("example 4"),
+      value: "example 4",
+    ),
+     RadioItem(
+      child: Text("example 5"),
+      value: "example 5",
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -44,11 +56,14 @@ class RadioPage extends StatelessWidget {
             items: _items,
             formFieldColor: fieldColor,
           ),
-          Container(
-            height: 24,
+          DecorRadioGroup<String>(
+            groupStyle: RadioGroupStyle.vertical,
+            value: "example 1",
+            items: _items,
+            formFieldColor: fieldColor,
           ),
           DecorRadioGroup<String>(
-            vertical: true,
+            groupStyle: RadioGroupStyle.grid,
             value: "example 1",
             items: _items,
             formFieldColor: fieldColor,
@@ -66,7 +81,15 @@ class RadioPage extends StatelessWidget {
           DecorRadioGroup<String>(
             cardEffect: true,
             elevation: 4,
-            vertical: true,
+            groupStyle: RadioGroupStyle.vertical,
+            value: "example 1",
+            items: _items,
+            formFieldColor: fieldColor,
+          ),
+          DecorRadioGroup<String>(
+            cardEffect: true,
+            elevation: 4,
+            groupStyle: RadioGroupStyle.grid,
             value: "example 1",
             items: _items,
             formFieldColor: fieldColor,
