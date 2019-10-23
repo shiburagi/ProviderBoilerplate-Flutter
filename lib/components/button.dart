@@ -38,7 +38,7 @@ class DecorButton extends RaisedButton {
     double disabledElevation,
     EdgeInsetsGeometry padding,
     ShapeBorder shape,
-    Clip clipBehavior,
+    Clip clipBehavior = Clip.none,
     FocusNode focusNode,
     MaterialTapTargetSize materialTapTargetSize,
     Duration animationDuration,
@@ -84,7 +84,6 @@ class DecorButton extends RaisedButton {
   final Widget loading;
   @override
   Widget build(BuildContext context) {
-    final ButtonThemeData buttonTheme = ButtonTheme.of(context);
     return AbsorbPointer(
       child: buildButton(context),
       absorbing: isLoading,
@@ -132,7 +131,7 @@ class DecorButton extends RaisedButton {
       disabledColor: buttonColors(context, type),
       colorScheme: ButtonTheme.of(context)
           .colorScheme
-          .copyWith(brightness: buttonTextColor(type)),
+          .copyWith(brightness: buttonTextColor(context, type)),
       minWidth: this.fullWidth ? double.maxFinite : null,
     );
     return ButtonTheme.fromButtonThemeData(
@@ -295,10 +294,12 @@ Color buttonColors(BuildContext context, ButtonType type) {
   }
 }
 
-Brightness buttonTextColor(ButtonType type) {
+Brightness buttonTextColor(BuildContext context, ButtonType type) {
   switch (type) {
     case ButtonType.primary:
+      return Theme.of(context).primaryColorBrightness;
     case ButtonType.accent:
+      return Theme.of(context).accentColorBrightness;
     case ButtonType.danger:
     case ButtonType.success:
       return Brightness.dark;
