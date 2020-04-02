@@ -17,7 +17,7 @@ export 'package:flutter_spinkit/flutter_spinkit.dart';
 export 'utils/assets.dart';
 
 class ProviderBoilerplate extends StatelessWidget {
-  final List<SingleChildCloneableWidget> providers;
+  final List<Provider> providers;
   final Widget child;
 
   final Function(BuildContext, FlutterErrorDetails) errorWidget;
@@ -45,7 +45,7 @@ class ProviderBoilerplate extends StatelessWidget {
 
 Provider<T> registerProvider<T>(T blocBase) {
   return Provider<T>(
-    builder: (context) => blocBase,
+    create: (context) => blocBase,
     dispose: (context, bloc) => (blocBase as BaseBloc).dispose(),
   );
 }
