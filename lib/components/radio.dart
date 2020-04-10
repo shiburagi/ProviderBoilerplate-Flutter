@@ -95,6 +95,7 @@ class DecorRadioGroup<T> extends FormField<T> {
               );
               return InputDecorator(
                 decoration: InputDecoration(
+                  errorText: field.errorText,
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       width: 0,
