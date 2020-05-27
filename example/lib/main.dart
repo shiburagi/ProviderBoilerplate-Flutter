@@ -51,8 +51,8 @@ class _MyAppState extends State<MyApp> {
                 accentColor: Colors.purple,
               ),
               home: SplashPage(
-                auth: (c) => Page(title: "Login Page"),
-                landing: (c) => Page(title: "User Page"),
+                auth: (c) => BasicPage(title: "Login Page"),
+                landing: (c) => BasicPage(title: "User Page"),
                 hasAccess: (d) => d,
                 onStart: onStart,
               ),

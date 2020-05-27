@@ -11,15 +11,15 @@ List<BottomNavigationBarItem> barItems() {
   ];
 }
 
-class Page extends StatefulWidget {
+class BasicPage extends StatefulWidget {
   final String title;
-  Page({this.title});
+  BasicPage({this.title});
 
   @override
-  _PageState createState() => _PageState();
+  _BasicPageState createState() => _BasicPageState();
 }
 
-class _PageState extends BlocState<Page, PageBloc> {
+class _BasicPageState extends BlocState<BasicPage, PageBloc> {
   @override
   Widget build(BuildContext context) {
     ThemeBloc themeBloc = Provider.of(context);

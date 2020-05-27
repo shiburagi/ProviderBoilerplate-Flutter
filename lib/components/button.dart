@@ -126,9 +126,10 @@ class DecorButton extends RaisedButton {
   }
 
   Widget buildRaisedButton(BuildContext context) {
+    Color buttonColor = buttonColors(context, type);
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
-      buttonColor: buttonColors(context, type),
-      disabledColor: buttonColors(context, type),
+      buttonColor: buttonColor,
+      disabledColor: buttonColor.withOpacity(0.5),
       colorScheme: ButtonTheme.of(context)
           .colorScheme
           .copyWith(brightness: buttonTextColor(context, type)),
