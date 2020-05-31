@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
 ThemeData _buildThemeData({Brightness brightness: Brightness.light}) {
   return ThemeData(
     brightness: brightness,
-    splashColor: Color(0xFF2ecc71),
+    splashColor: Colors.amber,
     primarySwatch: Colors.amber,
     accentColor: brightness == Brightness.light ? Colors.black : Colors.white,
     inputDecorationTheme: InputDecorationTheme(
