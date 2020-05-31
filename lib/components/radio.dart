@@ -96,12 +96,7 @@ class DecorRadioGroup<T> extends FormField<T> {
               return InputDecorator(
                 decoration: InputDecoration(
                   errorText: field.errorText,
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 0,
-                      color: Colors.transparent,
-                    ),
-                  ),
+                  border: InputBorder.none,
                 ),
                 child: cardEffect
                     ? Card(
@@ -111,7 +106,7 @@ class DecorRadioGroup<T> extends FormField<T> {
               );
             });
 
-  var columnCount;
+  final int columnCount;
 
   final EdgeInsets padding;
   final RadioGroupStyle groupStyle;

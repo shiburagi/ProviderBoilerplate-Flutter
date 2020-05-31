@@ -8,12 +8,15 @@ import 'package:provider_boilerplate/provider_boilerplate.dart';
 import 'package:provider_boilerplate_example/bloc.dart';
 import 'package:provider_boilerplate_example/page.dart';
 
-void main() => SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]).then((_) {
-      runApp(new MyApp());
-    });
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(new MyApp());
+  });
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -42,14 +45,9 @@ class _MyAppState extends State<MyApp> {
           builder: (context, snapshot) {
             ThemeMode mode = snapshot.data;
             return MaterialApp(
-              themeMode: mode,
-              darkTheme: ThemeData(
-                brightness: Brightness.dark,
-                accentColor: Colors.purple,
-              ),
-              theme: ThemeData(
-                accentColor: Colors.purple,
-              ),
+              // themeMode: mode,
+              darkTheme: _buildThemeData(brightness: Brightness.dark),
+              theme: _buildThemeData(brightness: Brightness.light),
               home: SplashPage(
                 auth: (c) => BasicPage(title: "Login Page"),
                 landing: (c) => BasicPage(title: "User Page"),
@@ -60,4 +58,16 @@ class _MyAppState extends State<MyApp> {
           }),
     );
   }
+}
+
+ThemeData _buildThemeData({Brightness brightness: Brightness.light}) {
+  return ThemeData(
+    brightness: brightness,
+    splashColor: Color(0xFF2ecc71),
+    primarySwatch: Colors.amber,
+    accentColor: brightness == Brightness.light ? Colors.black : Colors.white,
+    inputDecorationTheme: InputDecorationTheme(
+        contentPadding: EdgeInsets.fromLTRB(16, 12, 16, 12)),
+    textTheme: TextTheme(),
+  );
 }

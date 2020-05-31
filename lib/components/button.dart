@@ -129,7 +129,7 @@ class DecorButton extends RaisedButton {
     Color buttonColor = buttonColors(context, type);
     final ButtonThemeData buttonTheme = ButtonTheme.of(context).copyWith(
       buttonColor: buttonColor,
-      disabledColor: buttonColor.withOpacity(0.5),
+      disabledColor: buttonColor?.withOpacity(0.5),
       colorScheme: ButtonTheme.of(context)
           .colorScheme
           .copyWith(brightness: buttonTextColor(context, type)),

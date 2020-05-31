@@ -10,6 +10,7 @@ class ButtonPage extends StatelessWidget {
         buildButtonList(context, "Flat", ButtonVariant.flat),
         buildButtonList(context, "Raised", ButtonVariant.raised),
         buildButtonList(context, "Outlined", ButtonVariant.outlined),
+        buildButtonList(context, "Circular", ButtonVariant.circular),
         Container(
           height: 48,
         )
@@ -80,8 +81,26 @@ class ButtonPage extends StatelessWidget {
             isLoading: true,
             variant: variant,
             onPressed: () {},
-            type: ButtonType.success,
+            type: ButtonType.accent,
+            child: Text("Accent"),
+          ),
+          DecorButton(
+            fullWidth: false,
+            hasLoading: true,
+            isLoading: true,
+            variant: variant,
+            onPressed: () {},
+            type: ButtonType.danger,
             child: Text("Danger"),
+          ),
+          DecorButton(
+            fullWidth: true,
+            hasLoading: true,
+            isLoading: true,
+            variant: variant,
+            onPressed: () {},
+            type: ButtonType.accent,
+            child: Text("Loading"),
           ),
           DecorButton(
             fullWidth: true,

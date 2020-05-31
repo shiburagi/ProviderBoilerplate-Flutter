@@ -1,7 +1,10 @@
 library provider_boilerplate;
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'bloc/base_bloc.dart';
 import 'package:flutter/foundation.dart';
 
@@ -17,18 +20,17 @@ export 'package:flutter_spinkit/flutter_spinkit.dart';
 export 'utils/assets.dart';
 
 class ProviderBoilerplate extends StatelessWidget {
-  final List<Provider> providers;
+  final List<SingleChildWidget> providers;
   final Widget child;
 
   final Function(BuildContext, FlutterErrorDetails) errorWidget;
   ProviderBoilerplate({
-    this.providers = const [],
+    this.providers,
     this.errorWidget,
     this.child,
     Key key,
   }) : super(key: key);
 
-  @required
   @override
   Widget build(BuildContext context) {
     if (kReleaseMode && errorWidget != null) {
@@ -36,8 +38,9 @@ class ProviderBoilerplate extends StatelessWidget {
         return errorWidget(context, errorDetails);
       };
     }
+    log("providers: ${providers.length}");
     return MultiProvider(
-      providers: providers,
+      providers: this.providers,
       child: this.child,
     );
   }
