@@ -24,14 +24,24 @@ class MyApp extends StatefulWidget {
 }
 
 ThemeBloc themeBloc = ThemeBloc();
+Future<bool> onStart(BuildContext context) async {
+  await Future.delayed(Duration(seconds: 2));
+
+  return Random().nextBool();
+}
+
+Map<String, WidgetBuilder> routes = {
+  "/": (context) => SplashBuilder(
+        hasAccess: (d) => d,
+        onStart: onStart,
+        authRoute: "/login",
+        landingRoute: "/user",
+      ),
+  "/login": (c) => BasicPage(title: "Login Page"),
+  "/user": (c) => BasicPage(title: "User Page"),
+};
 
 class _MyAppState extends State<MyApp> {
-  Future<bool> onStart(BuildContext context) async {
-    await Future.delayed(Duration(seconds: 2));
-
-    return Random().nextBool();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ProviderBoilerplate(
@@ -45,15 +55,16 @@ class _MyAppState extends State<MyApp> {
           builder: (context, snapshot) {
             ThemeMode mode = snapshot.data;
             return MaterialApp(
-              // themeMode: mode,
+              themeMode: mode,
               darkTheme: _buildThemeData(brightness: Brightness.dark),
               theme: _buildThemeData(brightness: Brightness.light),
-              home: SplashPage(
-                auth: (c) => BasicPage(title: "Login Page"),
-                landing: (c) => BasicPage(title: "User Page"),
-                hasAccess: (d) => d,
-                onStart: onStart,
-              ),
+              routes: routes,
+              // home: SplashBuilder(
+              //   auth: (c) => BasicPage(title: "Login Page"),
+              //   landing: (c) => BasicPage(title: "User Page"),
+              //   hasAccess: (d) => d,
+              //   onStart: onStart,
+              // ),
             );
           }),
     );

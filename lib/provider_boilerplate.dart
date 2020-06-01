@@ -53,57 +53,87 @@ Provider<T> registerProvider<T>(T blocBase) {
   );
 }
 
-class SplashPage<T> extends StatefulWidget {
+class SplashBuilder<T> extends StatefulWidget {
   final WidgetBuilder splash;
   final WidgetBuilder auth;
   final WidgetBuilder landing;
+  final String authRoute;
+  final String landingRoute;
   final Future Function(BuildContext) onStart;
   final bool Function(dynamic) hasAccess;
 
-  SplashPage({
+  SplashBuilder({
+    Key key,
     @required this.onStart,
     @required this.hasAccess,
-    @required this.auth,
-    @required this.landing,
     this.splash,
-  });
+    this.auth,
+    this.landing,
+    this.authRoute,
+    this.landingRoute,
+  })  : assert(auth == null || authRoute == null),
+        assert(landing == null || landingRoute == null),
+        super(key: key);
   @override
-  _SplashPageState<T> createState() => _SplashPageState<T>();
+  _SplashBuilderState<T> createState() => _SplashBuilderState<T>();
 }
 
-class _SplashPageState<T> extends State<SplashPage> {
-  bool willReceiveNewData = true;
+class _SplashBuilderState<T> extends State<SplashBuilder> {
+  bool _willReceiveNewData = true;
+  bool _hasAccess;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void redirect(String route) {
+    if (route != null) Navigator.of(context).pushReplacementNamed(route);
+  }
+
+  void afterBuild() {
+    if (widget.landingRoute != null || widget.authRoute != null)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_hasAccess != null)
+          redirect(_hasAccess ? widget.landingRoute : widget.authRoute);
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
+    afterBuild();
     return FutureBuilder<T>(
         future: this.widget.onStart(context),
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-          if (!willReceiveNewData ||
+          if (!_willReceiveNewData ||
               snapshot.connectionState == ConnectionState.done) {
-            willReceiveNewData = false;
-            return widget.hasAccess(snapshot.data)
-                ? widget.landing(context)
-                : widget.auth(context);
+            _willReceiveNewData = false;
+            _hasAccess = widget.hasAccess(snapshot.data);
+            return _hasAccess
+                ? widget?.landing?.call(context) ?? buildDefaultSplash(context)
+                : widget?.auth?.call(context) ?? buildDefaultSplash(context);
           }
 
           return this.widget.splash != null
               ? this.widget.splash(context)
-              : Scaffold(
-                  body: Container(
-                    color: Theme.of(context).primaryColor,
-                    child: Center(
-                      child: SizedBox(
-                        width: 96,
-                        height: 96,
-                        child: Theme(
-                          data: Theme.of(context)
-                              .copyWith(accentColor: Colors.white),
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+              : buildDefaultSplash(context);
         });
+  }
+
+  Scaffold buildDefaultSplash(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Theme.of(context).primaryColor,
+        child: Center(
+          child: SizedBox(
+            width: 96,
+            height: 96,
+            child: Theme(
+              data: Theme.of(context).copyWith(accentColor: Colors.white),
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
