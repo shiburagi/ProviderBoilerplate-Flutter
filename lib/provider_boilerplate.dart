@@ -79,7 +79,6 @@ class SplashBuilder<T> extends StatefulWidget {
 }
 
 class _SplashBuilderState<T> extends State<SplashBuilder> {
-  bool _willReceiveNewData = true;
   bool _hasAccess;
   @override
   void initState() {
@@ -90,33 +89,33 @@ class _SplashBuilderState<T> extends State<SplashBuilder> {
     if (route != null) Navigator.of(context).pushReplacementNamed(route);
   }
 
-  void afterBuild() {
-    if (widget.landingRoute != null || widget.authRoute != null)
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_hasAccess != null)
-          redirect(_hasAccess ? widget.landingRoute : widget.authRoute);
-      });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    this.widget.onStart(context).then((value) {
+      _hasAccess = widget.hasAccess(value);
+
+      if (widget.landingRoute != null || widget.authRoute != null)
+        redirect(_hasAccess ? widget.landingRoute : widget.authRoute);
+      if (widget.landing != null || widget.auth != null) setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    afterBuild();
-    return FutureBuilder<T>(
-        future: this.widget.onStart(context),
-        builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
-          if (!_willReceiveNewData ||
-              snapshot.connectionState == ConnectionState.done) {
-            _willReceiveNewData = false;
-            _hasAccess = widget.hasAccess(snapshot.data);
-            return _hasAccess
-                ? widget?.landing?.call(context) ?? buildDefaultSplash(context)
-                : widget?.auth?.call(context) ?? buildDefaultSplash(context);
-          }
+    if (_hasAccess != null) {
+      return _hasAccess
+          ? widget?.landing?.call(context) ?? buildSplash(context)
+          : widget?.auth?.call(context) ?? buildSplash(context);
+    }
 
-          return this.widget.splash != null
-              ? this.widget.splash(context)
-              : buildDefaultSplash(context);
-        });
+    return buildSplash(context);
+  }
+
+  Scaffold buildSplash(BuildContext context) {
+    return this.widget.splash != null
+        ? this.widget.splash(context)
+        : buildDefaultSplash(context);
   }
 
   Scaffold buildDefaultSplash(BuildContext context) {
